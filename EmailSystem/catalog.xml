@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/E:/学习/My_course/WebServices_and_SOA_刘岩/FinalProject/EmailSystem/src/java/com/potatoni/listener/EmailEntitySchema.xsd" uri="src/conf/xml-resources/jaxb/EmailEntity/EmailEntitySchema.xsd"/>
+</catalog>

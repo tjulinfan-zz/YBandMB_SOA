@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.potatoni.com/mailsystem/emailentity"
+    xmlns:tns="http://www.potatoni.com/mailsystem/emailentity"
+    elementFormDefault="qualified">
+    <xsd:complexType name="EmailEntityComplexType">
+        <xsd:sequence>
+            <xsd:element name="mailto" type="xsd:string" />
+            <xsd:element name="subject" type="xsd:string" />
+            <xsd:element name="message" type="xsd:string" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="EmailEntity" type="tns:EmailEntityComplexType"></xsd:element>
+</xsd:schema>
