@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: 127.0.0.1
--- 生成日期: 2014-06-13 17:14:35
+-- 生成日期: 2014-06-13 20:41:44
 -- 服务器版本: 5.6.14
 -- PHP 版本: 5.5.6
 
@@ -106,18 +106,20 @@ CREATE TABLE IF NOT EXISTS `user` (
   `email` varchar(30) NOT NULL,
   `phonenum` varchar(20) DEFAULT NULL,
   `address` varchar(40) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
 --
 -- 转存表中的数据 `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `email`, `phonenum`, `address`) VALUES
-(7, 'test1', 'linfan', 'lflincoln@qq.com', '', ''),
 (8, 'wtx', 'wtx', 'wangtx13@163.com', '', ''),
 (9, 'lph', 'lph', '245738112@qq.com', '', ''),
-(10, 'linfan', 'linfan', 'tjulinfan@gmail.com', '', '');
+(10, 'linfan', 'linfan', 'tjulinfan@gmail.com', '', ''),
+(11, 'test2', 'linfan', 'lflincoln@qq.com', NULL, NULL);
 
 -- --------------------------------------------------------
 
