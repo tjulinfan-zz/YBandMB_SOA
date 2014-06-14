@@ -109,17 +109,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
-
---
--- 转存表中的数据 `user`
---
-
-INSERT INTO `user` (`id`, `username`, `password`, `email`, `phonenum`, `address`) VALUES
-(8, 'wtx', 'wtx', 'wangtx13@163.com', '', ''),
-(9, 'lph', 'lph', '245738112@qq.com', '', ''),
-(10, 'linfan', 'linfan', 'tjulinfan@gmail.com', '', ''),
-(11, 'test2', 'linfan', 'lflincoln@qq.com', NULL, NULL);
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
