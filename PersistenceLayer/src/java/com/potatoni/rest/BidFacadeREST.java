@@ -7,6 +7,7 @@
 package com.potatoni.rest;
 
 import com.potatoni.entity.Bid;
+import com.potatoni.exception.ResourceCreateException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -37,7 +38,7 @@ public class BidFacadeREST extends AbstractFacade<Bid> {
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(Bid entity) {
+    public void create(Bid entity)  {
         super.create(entity);
     }
 
@@ -86,5 +87,4 @@ public class BidFacadeREST extends AbstractFacade<Bid> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
 }

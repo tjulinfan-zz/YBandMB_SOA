@@ -86,5 +86,4 @@ public class YbandmbSessionFacadeREST extends AbstractFacade<YbandmbSession> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
 }

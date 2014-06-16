@@ -7,6 +7,7 @@
 package com.potatoni.rest;
 
 import com.potatoni.entity.Book;
+import com.potatoni.exception.ResourceCreateException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -86,5 +87,4 @@ public class BookFacadeREST extends AbstractFacade<Book> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
 }

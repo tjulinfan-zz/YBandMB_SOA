@@ -7,6 +7,7 @@
 package com.potatoni.rest;
 
 import com.potatoni.entity.Bookinfo;
+import com.potatoni.exception.ResourceCreateException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

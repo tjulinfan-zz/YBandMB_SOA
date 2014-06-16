@@ -7,6 +7,7 @@
 package com.potatoni.rest;
 
 import com.potatoni.entity.OrderForm;
+import com.potatoni.exception.ResourceCreateException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -86,5 +87,4 @@ public class OrderFormFacadeREST extends AbstractFacade<OrderForm> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
 }
