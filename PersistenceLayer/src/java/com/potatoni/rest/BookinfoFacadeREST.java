@@ -7,7 +7,6 @@
 package com.potatoni.rest;
 
 import com.potatoni.entity.Bookinfo;
-import com.potatoni.exception.ResourceCreateException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -28,7 +27,7 @@ import javax.ws.rs.Produces;
 @Stateless
 @Path("com.potatoni.entity.bookinfo")
 public class BookinfoFacadeREST extends AbstractFacade<Bookinfo> {
-    @PersistenceContext(unitName = "PersistenceLayerPU")
+    @PersistenceContext(unitName = "DatabaseLayerPU")
     private EntityManager em;
 
     public BookinfoFacadeREST() {

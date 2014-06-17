@@ -28,7 +28,7 @@ import javax.ws.rs.Produces;
 @Stateless
 @Path("com.potatoni.entity.bid")
 public class BidFacadeREST extends AbstractFacade<Bid> {
-    @PersistenceContext(unitName = "PersistenceLayerPU")
+    @PersistenceContext(unitName = "DatabaseLayerPU")
     private EntityManager em;
 
     public BidFacadeREST() {

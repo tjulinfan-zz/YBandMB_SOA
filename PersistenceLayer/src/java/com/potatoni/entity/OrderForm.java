@@ -14,8 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -34,6 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "OrderForm.findAll", query = "SELECT o FROM OrderForm o"),
     @NamedQuery(name = "OrderForm.findById", query = "SELECT o FROM OrderForm o WHERE o.id = :id"),
+    @NamedQuery(name = "OrderForm.findByBookId", query = "SELECT o FROM OrderForm o WHERE o.bookId = :bookId"),
+    @NamedQuery(name = "OrderForm.findBySellerId", query = "SELECT o FROM OrderForm o WHERE o.sellerId = :sellerId"),
     @NamedQuery(name = "OrderForm.findByCustomerId", query = "SELECT o FROM OrderForm o WHERE o.customerId = :customerId"),
     @NamedQuery(name = "OrderForm.findByPrice", query = "SELECT o FROM OrderForm o WHERE o.price = :price"),
     @NamedQuery(name = "OrderForm.findBySoldDate", query = "SELECT o FROM OrderForm o WHERE o.soldDate = :soldDate"),
@@ -46,6 +46,14 @@ public class OrderForm implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "book_id")
+    private int bookId;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "seller_id")
+    private int sellerId;
     @Basic(optional = false)
     @NotNull
     @Column(name = "customer_id")
@@ -63,12 +71,6 @@ public class OrderForm implements Serializable {
     private Integer logisticsId;
     @Column(name = "is_finished")
     private Boolean isFinished;
-    @JoinColumn(name = "seller_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private User sellerId;
-    @JoinColumn(name = "book_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Book bookId;
 
     public OrderForm() {
     }
@@ -77,8 +79,10 @@ public class OrderForm implements Serializable {
         this.id = id;
     }
 
-    public OrderForm(Integer id, int customerId, float price, Date soldDate) {
+    public OrderForm(Integer id, int bookId, int sellerId, int customerId, float price, Date soldDate) {
         this.id = id;
+        this.bookId = bookId;
+        this.sellerId = sellerId;
         this.customerId = customerId;
         this.price = price;
         this.soldDate = soldDate;
@@ -90,6 +94,22 @@ public class OrderForm implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public int getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
+    }
+
+    public int getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(int sellerId) {
+        this.sellerId = sellerId;
     }
 
     public int getCustomerId() {
@@ -130,22 +150,6 @@ public class OrderForm implements Serializable {
 
     public void setIsFinished(Boolean isFinished) {
         this.isFinished = isFinished;
-    }
-
-    public User getSellerId() {
-        return sellerId;
-    }
-
-    public void setSellerId(User sellerId) {
-        this.sellerId = sellerId;
-    }
-
-    public Book getBookId() {
-        return bookId;
-    }
-
-    public void setBookId(Book bookId) {
-        this.bookId = bookId;
     }
 
     @Override

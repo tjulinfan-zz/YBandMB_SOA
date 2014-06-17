@@ -7,7 +7,6 @@
 package com.potatoni.rest;
 
 import com.potatoni.entity.OrderForm;
-import com.potatoni.exception.ResourceCreateException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -28,7 +27,7 @@ import javax.ws.rs.Produces;
 @Stateless
 @Path("com.potatoni.entity.orderform")
 public class OrderFormFacadeREST extends AbstractFacade<OrderForm> {
-    @PersistenceContext(unitName = "PersistenceLayerPU")
+    @PersistenceContext(unitName = "DatabaseLayerPU")
     private EntityManager em;
 
     public OrderFormFacadeREST() {
@@ -87,4 +86,5 @@ public class OrderFormFacadeREST extends AbstractFacade<OrderForm> {
     protected EntityManager getEntityManager() {
         return em;
     }
+    
 }

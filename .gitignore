@@ -16,3 +16,6 @@
 *.ear
 
 test*/
+/EnterpriseApplication1/EnterpriseApplication1-war/nbproject/private/
+/EnterpriseApplication1/EnterpriseApplication1-ejb/nbproject/private/
+/UserSystem/

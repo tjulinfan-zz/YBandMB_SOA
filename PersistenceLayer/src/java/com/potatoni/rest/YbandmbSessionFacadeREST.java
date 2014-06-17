@@ -7,6 +7,7 @@
 package com.potatoni.rest;
 
 import com.potatoni.entity.YbandmbSession;
+import com.potatoni.exception.ResourceNotExistsException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -27,7 +28,7 @@ import javax.ws.rs.Produces;
 @Stateless
 @Path("com.potatoni.entity.ybandmbsession")
 public class YbandmbSessionFacadeREST extends AbstractFacade<YbandmbSession> {
-    @PersistenceContext(unitName = "PersistenceLayerPU")
+    @PersistenceContext(unitName = "DatabaseLayerPU")
     private EntityManager em;
 
     public YbandmbSessionFacadeREST() {
@@ -58,7 +59,12 @@ public class YbandmbSessionFacadeREST extends AbstractFacade<YbandmbSession> {
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
     public YbandmbSession find(@PathParam("id") String id) {
-        return super.find(id);
+        YbandmbSession session = super.find(id);
+        if (session == null) {
+            throw new ResourceNotExistsException();
+        } else {
+            return session;
+        }
     }
 
     @GET
@@ -86,4 +92,5 @@ public class YbandmbSessionFacadeREST extends AbstractFacade<YbandmbSession> {
     protected EntityManager getEntityManager() {
         return em;
     }
+    
 }

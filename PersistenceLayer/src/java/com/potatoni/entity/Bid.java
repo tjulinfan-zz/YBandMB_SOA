@@ -14,8 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -34,6 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Bid.findAll", query = "SELECT b FROM Bid b"),
     @NamedQuery(name = "Bid.findById", query = "SELECT b FROM Bid b WHERE b.id = :id"),
+    @NamedQuery(name = "Bid.findByBookId", query = "SELECT b FROM Bid b WHERE b.bookId = :bookId"),
+    @NamedQuery(name = "Bid.findByUserId", query = "SELECT b FROM Bid b WHERE b.userId = :userId"),
     @NamedQuery(name = "Bid.findByPrice", query = "SELECT b FROM Bid b WHERE b.price = :price"),
     @NamedQuery(name = "Bid.findByBidDate", query = "SELECT b FROM Bid b WHERE b.bidDate = :bidDate")})
 public class Bid implements Serializable {
@@ -45,6 +45,14 @@ public class Bid implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "book_id")
+    private int bookId;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "user_id")
+    private int userId;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "price")
     private float price;
     @Basic(optional = false)
@@ -52,12 +60,6 @@ public class Bid implements Serializable {
     @Column(name = "bid_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date bidDate;
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private User userId;
-    @JoinColumn(name = "book_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Book bookId;
 
     public Bid() {
     }
@@ -66,8 +68,10 @@ public class Bid implements Serializable {
         this.id = id;
     }
 
-    public Bid(Integer id, float price, Date bidDate) {
+    public Bid(Integer id, int bookId, int userId, float price, Date bidDate) {
         this.id = id;
+        this.bookId = bookId;
+        this.userId = userId;
         this.price = price;
         this.bidDate = bidDate;
     }
@@ -78,6 +82,22 @@ public class Bid implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public int getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public float getPrice() {
@@ -94,22 +114,6 @@ public class Bid implements Serializable {
 
     public void setBidDate(Date bidDate) {
         this.bidDate = bidDate;
-    }
-
-    public User getUserId() {
-        return userId;
-    }
-
-    public void setUserId(User userId) {
-        this.userId = userId;
-    }
-
-    public Book getBookId() {
-        return bookId;
-    }
-
-    public void setBookId(Book bookId) {
-        this.bookId = bookId;
     }
 
     @Override

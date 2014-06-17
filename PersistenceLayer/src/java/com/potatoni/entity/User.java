@@ -7,9 +7,7 @@
 package com.potatoni.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,12 +15,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -68,14 +64,6 @@ public class User implements Serializable {
     @Size(max = 40)
     @Column(name = "address")
     private String address;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ownerId")
-    private Collection<Book> bookCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private Collection<Bid> bidCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")
-    private Collection<YbandmbSession> ybandmbSessionCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sellerId")
-    private Collection<OrderForm> orderFormCollection;
 
     public User() {
     }
@@ -137,42 +125,6 @@ public class User implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    @XmlTransient
-    public Collection<Book> getBookCollection() {
-        return bookCollection;
-    }
-
-    public void setBookCollection(Collection<Book> bookCollection) {
-        this.bookCollection = bookCollection;
-    }
-
-    @XmlTransient
-    public Collection<Bid> getBidCollection() {
-        return bidCollection;
-    }
-
-    public void setBidCollection(Collection<Bid> bidCollection) {
-        this.bidCollection = bidCollection;
-    }
-
-    @XmlTransient
-    public Collection<YbandmbSession> getYbandmbSessionCollection() {
-        return ybandmbSessionCollection;
-    }
-
-    public void setYbandmbSessionCollection(Collection<YbandmbSession> ybandmbSessionCollection) {
-        this.ybandmbSessionCollection = ybandmbSessionCollection;
-    }
-
-    @XmlTransient
-    public Collection<OrderForm> getOrderFormCollection() {
-        return orderFormCollection;
-    }
-
-    public void setOrderFormCollection(Collection<OrderForm> orderFormCollection) {
-        this.orderFormCollection = orderFormCollection;
     }
 
     @Override

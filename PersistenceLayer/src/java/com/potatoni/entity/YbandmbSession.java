@@ -11,8 +11,6 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -29,7 +27,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "YbandmbSession.findAll", query = "SELECT y FROM YbandmbSession y"),
-    @NamedQuery(name = "YbandmbSession.findBySessionId", query = "SELECT y FROM YbandmbSession y WHERE y.sessionId = :sessionId")})
+    @NamedQuery(name = "YbandmbSession.findBySessionId", query = "SELECT y FROM YbandmbSession y WHERE y.sessionId = :sessionId"),
+    @NamedQuery(name = "YbandmbSession.findByUserid", query = "SELECT y FROM YbandmbSession y WHERE y.userid = :userid")})
 public class YbandmbSession implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -38,15 +37,21 @@ public class YbandmbSession implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "session_id")
     private String sessionId;
-    @JoinColumn(name = "userid", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private User userid;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "userid")
+    private int userid;
 
     public YbandmbSession() {
     }
 
     public YbandmbSession(String sessionId) {
         this.sessionId = sessionId;
+    }
+
+    public YbandmbSession(String sessionId, int userid) {
+        this.sessionId = sessionId;
+        this.userid = userid;
     }
 
     public String getSessionId() {
@@ -57,11 +62,11 @@ public class YbandmbSession implements Serializable {
         this.sessionId = sessionId;
     }
 
-    public User getUserid() {
+    public int getUserid() {
         return userid;
     }
 
-    public void setUserid(User userid) {
+    public void setUserid(int userid) {
         this.userid = userid;
     }
 

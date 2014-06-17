@@ -7,27 +7,21 @@
 package com.potatoni.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -39,9 +33,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Book.findAll", query = "SELECT b FROM Book b"),
     @NamedQuery(name = "Book.findById", query = "SELECT b FROM Book b WHERE b.id = :id"),
+    @NamedQuery(name = "Book.findByOwnerId", query = "SELECT b FROM Book b WHERE b.ownerId = :ownerId"),
     @NamedQuery(name = "Book.findByPrice", query = "SELECT b FROM Book b WHERE b.price = :price"),
     @NamedQuery(name = "Book.findByDescription", query = "SELECT b FROM Book b WHERE b.description = :description"),
-    @NamedQuery(name = "Book.findBySoldDate", query = "SELECT b FROM Book b WHERE b.soldDate = :soldDate")})
+    @NamedQuery(name = "Book.findBySoldDate", query = "SELECT b FROM Book b WHERE b.soldDate = :soldDate"),
+    @NamedQuery(name = "Book.findByIsbn", query = "SELECT b FROM Book b WHERE b.isbn = :isbn")})
 public class Book implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,6 +45,10 @@ public class Book implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "owner_id")
+    private int ownerId;
     @Basic(optional = false)
     @NotNull
     @Column(name = "price")
@@ -61,16 +61,11 @@ public class Book implements Serializable {
     @Column(name = "sold_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date soldDate;
-    @JoinColumn(name = "owner_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private User ownerId;
-    @JoinColumn(name = "isbn", referencedColumnName = "isbn")
-    @ManyToOne(optional = false)
-    private Bookinfo isbn;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "bookId")
-    private Collection<Bid> bidCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "bookId")
-    private Collection<OrderForm> orderFormCollection;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "isbn")
+    private String isbn;
 
     public Book() {
     }
@@ -79,10 +74,12 @@ public class Book implements Serializable {
         this.id = id;
     }
 
-    public Book(Integer id, float price, String description) {
+    public Book(Integer id, int ownerId, float price, String description, String isbn) {
         this.id = id;
+        this.ownerId = ownerId;
         this.price = price;
         this.description = description;
+        this.isbn = isbn;
     }
 
     public Integer getId() {
@@ -91,6 +88,14 @@ public class Book implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public int getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
     }
 
     public float getPrice() {
@@ -117,38 +122,12 @@ public class Book implements Serializable {
         this.soldDate = soldDate;
     }
 
-    public User getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(User ownerId) {
-        this.ownerId = ownerId;
-    }
-
-    public Bookinfo getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(Bookinfo isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
-    }
-
-    @XmlTransient
-    public Collection<Bid> getBidCollection() {
-        return bidCollection;
-    }
-
-    public void setBidCollection(Collection<Bid> bidCollection) {
-        this.bidCollection = bidCollection;
-    }
-
-    @XmlTransient
-    public Collection<OrderForm> getOrderFormCollection() {
-        return orderFormCollection;
-    }
-
-    public void setOrderFormCollection(Collection<OrderForm> orderFormCollection) {
-        this.orderFormCollection = orderFormCollection;
     }
 
     @Override

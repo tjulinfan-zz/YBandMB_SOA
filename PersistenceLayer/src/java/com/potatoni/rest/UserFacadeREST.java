@@ -32,7 +32,7 @@ import javax.ws.rs.core.Response;
 @Stateless
 @Path("com.potatoni.entity.user")
 public class UserFacadeREST extends AbstractFacade<User> {
-    @PersistenceContext(unitName = "PersistenceLayerPU")
+    @PersistenceContext(unitName = "DatabaseLayerPU")
     private EntityManager em;
 
     public UserFacadeREST() {
@@ -48,10 +48,10 @@ public class UserFacadeREST extends AbstractFacade<User> {
     @Override
     @Consumes({"application/xml", "application/json"})
     public void create(User entity) {
-        if (findByUsername(entity.getUsername()) == null && findByEmail(entity.getEmail()) == null) {
+        if (findByUsername(entity.getUsername()) == null) {
             super.create(entity);
         } else {
-            throw new ResourceCreateException(Response.Status.CONFLICT, "Username or email exsits");
+            throw new ResourceCreateException(Response.Status.CONFLICT, "Username exsits");
         }
     }
 
@@ -77,7 +77,24 @@ public class UserFacadeREST extends AbstractFacade<User> {
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
     public User find(@PathParam("id") Integer id) {
-        return super.find(id);
+        User user = super.find(id);
+        if (user == null)
+            throw new ResourceNotExistsException();
+        return user;
+    }
+    
+    @GET
+    @Path("/username/{username}")
+    @Produces({"application/xml", "application/json"})
+    public User findByUsername(@PathParam("username") String username) {
+        if (username == null) return null;
+        Query q = em.createQuery("SELECT u FROM User u WHERE u.username = :username");
+        q.setParameter("username", username);
+        try {
+            return (User)q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     @GET
@@ -104,17 +121,6 @@ public class UserFacadeREST extends AbstractFacade<User> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
-    }
-    
-    private User findByUsername(String username) {
-        if (username == null) return null;
-        Query q = em.createQuery("SELECT u FROM User u WHERE u.username = :username");
-        q.setParameter("username", username);
-        try {
-            return (User)q.getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }
     }
     
     private User findByEmail(String email) {

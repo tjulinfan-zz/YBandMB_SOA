@@ -20,6 +20,7 @@ public class ResourceNotExistsException extends WebApplicationException {
      * detail message.
      */
     public ResourceNotExistsException() {
+        this("");
     }
 
     public ResourceNotExistsException(Response.Status status, String msg) {
@@ -32,6 +33,6 @@ public class ResourceNotExistsException extends WebApplicationException {
      * @param msg the detail message.
      */
     public ResourceNotExistsException(String msg) {
-        super(msg);
+        this(Response.Status.NOT_FOUND, msg);
     }
 }
