@@ -8,11 +8,14 @@ package com.potatoni.userws;
 import com.potatoni.entity.Session;
 import com.potatoni.entity.User;
 import com.potatoni.exception.InternalException;
+import com.potatoni.exception.PasswordIncorrectException;
+import com.potatoni.exception.UserNotExistingException;
+import com.potatoni.helper.CreateID;
 import com.potatoni.restclient.SessionRESTClient;
 import com.potatoni.restclient.UserRESTClient;
-import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
+import javax.jws.WebService;
 import javax.ws.rs.ClientErrorException;
 
 /**
@@ -21,6 +24,7 @@ import javax.ws.rs.ClientErrorException;
  */
 @WebService(serviceName = "UserWebService")
 public class UserWebService {
+    private User User;
 
     private static class STATUS {
 
@@ -78,6 +82,31 @@ public class UserWebService {
             client.create_JSON(newUser);
         } catch (ClientErrorException e) {
             throw new InternalException(String.valueOf(e.getResponse().getStatus()));
+        } finally {
+            client.close();
+        }
+    }
+
+    /**
+     * 登录
+     */
+    @WebMethod(operationName = "logIn")
+    public Session logIn(@WebParam(name = "username") String username, @WebParam(name = "password") String password) throws InternalException, PasswordIncorrectException, UserNotExistingException {
+        UserRESTClient client = new UserRESTClient();
+        SessionRESTClient sessionClient = new SessionRESTClient();
+        try {
+            User user = client.findByUsername_JSON(User.class, username);
+            if (user.getPassword().equals(password)) {
+                Session session = new Session(CreateID.generate(), user.getId());
+                sessionClient.create_JSON(session);
+                return session;
+            } else {
+                throw new PasswordIncorrectException();
+            }
+        } catch (ClientErrorException ex) {
+            if (ex.getResponse().getStatus() == STATUS.NOT_FOUND)
+                throw new UserNotExistingException();
+            throw new InternalException();
         } finally {
             client.close();
         }

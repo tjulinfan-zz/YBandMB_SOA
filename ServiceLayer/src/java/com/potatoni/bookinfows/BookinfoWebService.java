@@ -37,7 +37,7 @@ public class BookinfoWebService {
     /**
      * 添加新书
      */
-    @WebMethod(operationName = "addNewBook")
+    @WebMethod(operationName = "addNewBookinfo")
     public void addNewBookinfo(@WebParam(name = "isbn") String isbn) throws ServerNetworkException, InternalException {
         final String url = "https://api.douban.com/v2/book/isbn/";
         final int TIME_OUT_MS = 5000;
