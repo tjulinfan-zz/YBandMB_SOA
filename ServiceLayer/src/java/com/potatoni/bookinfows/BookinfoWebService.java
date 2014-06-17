@@ -21,6 +21,7 @@ import java.net.URLConnection;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
+import javax.ws.rs.ClientErrorException;
 
 /**
  *
@@ -29,11 +30,15 @@ import javax.jws.WebService;
 @WebService(serviceName = "BookinfoWebService")
 public class BookinfoWebService {
 
+    private static class STATUS {
+        public static final int NOT_FOUND = 404;
+    };
+    
     /**
      * 添加新书
      */
     @WebMethod(operationName = "addNewBook")
-    public void addNewBook(@WebParam(name = "isbn") String isbn) throws ServerNetworkException, InternalException {
+    public void addNewBookinfo(@WebParam(name = "isbn") String isbn) throws ServerNetworkException, InternalException {
         final String url = "https://api.douban.com/v2/book/isbn/";
         final int TIME_OUT_MS = 5000;
         try {
@@ -56,6 +61,7 @@ public class BookinfoWebService {
                 bookinfo.setDoubanurl(dBook.getUrl());
                 
                 client.create_JSON(client);
+                client.close();
             }
         } catch (MalformedURLException ex) {
             throw new ServerNetworkException();
@@ -71,7 +77,16 @@ public class BookinfoWebService {
      */
     @WebMethod(operationName = "isBookinfoExisting")
     public Boolean isBookinfoExisting(@WebParam(name = "isbn") String isbn) throws InternalException {
-        //TODO write your implementation code here:
-        return null;
+        BookinfoRESTClient client = new BookinfoRESTClient();
+        try {
+            Bookinfo bookinfo = client.find_JSON(Bookinfo.class, isbn);
+            return bookinfo != null;
+        } catch (ClientErrorException e) {
+            if (e.getResponse().getStatus() == STATUS.NOT_FOUND)
+                return false;
+            throw new InternalException();
+        } finally {
+            client.close();
+        }
     }
 }

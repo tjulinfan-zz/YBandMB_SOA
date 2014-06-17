@@ -7,6 +7,7 @@
 package com.potatoni.rest;
 
 import com.potatoni.entity.Bookinfo;
+import com.potatoni.exception.ResourceNotExistsException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -58,7 +59,10 @@ public class BookinfoFacadeREST extends AbstractFacade<Bookinfo> {
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
     public Bookinfo find(@PathParam("id") String id) {
-        return super.find(id);
+        Bookinfo bookinfo = super.find(id);
+        if (bookinfo == null)
+            throw new ResourceNotExistsException();
+        return bookinfo;
     }
 
     @GET
