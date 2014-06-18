@@ -9,6 +9,7 @@ package com.potatoni.bookinfows;
 import com.google.gson.Gson;
 import com.potatoni.entity.Bookinfo;
 import com.potatoni.entity.DoubanBook;
+import com.potatoni.exception.BookinfoNotExistingException;
 import com.potatoni.exception.InternalException;
 import com.potatoni.exception.ServerNetworkException;
 import com.potatoni.restclient.BookinfoRESTClient;
@@ -46,7 +47,7 @@ public class BookinfoWebService {
             URLConnection conn = getURL.openConnection();
             conn.setConnectTimeout(TIME_OUT_MS);
             Gson gson = new Gson();
-            DoubanBook dBook = gson.fromJson(new BufferedReader(new InputStreamReader(conn.getInputStream())), DoubanBook.class);
+            DoubanBook dBook = gson.fromJson(new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8")), DoubanBook.class);
             
             if (dBook != null) {
                 BookinfoRESTClient client = new BookinfoRESTClient();
@@ -60,7 +61,7 @@ public class BookinfoWebService {
                 bookinfo.setImgurl(dBook.getImage());
                 bookinfo.setDoubanurl(dBook.getUrl());
                 
-                client.create_JSON(client);
+                client.create_JSON(bookinfo);
                 client.close();
             }
         } catch (MalformedURLException ex) {
@@ -84,6 +85,23 @@ public class BookinfoWebService {
         } catch (ClientErrorException e) {
             if (e.getResponse().getStatus() == STATUS.NOT_FOUND)
                 return false;
+            throw new InternalException();
+        } finally {
+            client.close();
+        }
+    }
+
+    /**
+     * 获取Bookinfo
+     */
+    @WebMethod(operationName = "getBookinfo")
+    public Bookinfo getBookinfo(@WebParam(name = "isbn") String isbn) throws InternalException, BookinfoNotExistingException {
+        BookinfoRESTClient client = new BookinfoRESTClient();
+        try {
+            return client.find_JSON(Bookinfo.class, isbn);
+        } catch (ClientErrorException e) {
+            if (e.getResponse().getStatus() == STATUS.NOT_FOUND)
+                throw new BookinfoNotExistingException();
             throw new InternalException();
         } finally {
             client.close();

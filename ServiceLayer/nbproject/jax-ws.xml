@@ -7,6 +7,12 @@
     <service name="BookinfoWebService">
       <implementation-class>com.potatoni.bookinfows.BookinfoWebService</implementation-class>
     </service>
+    <service name="BookWebService">
+      <implementation-class>com.potatoni.bookws.BookWebService</implementation-class>
+    </service>
+    <service name="BidWebService">
+      <implementation-class>org.potatoni.bidws.BidWebService</implementation-class>
+    </service>
   </services>
   <clients/>
 </jax-ws>

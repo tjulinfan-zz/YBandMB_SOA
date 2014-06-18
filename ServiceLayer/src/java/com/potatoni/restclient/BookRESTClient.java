@@ -11,11 +11,11 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 
 /**
- * Jersey REST client generated for REST resource:YbandmbSessionFacadeREST
- * [com.potatoni.entity.ybandmbsession]<br>
+ * Jersey REST client generated for REST resource:BookFacadeREST
+ * [com.potatoni.entity.book]<br>
  * USAGE:
  * <pre>
- *        SessionRESTClient client = new SessionRESTClient();
+ *        BookRESTClient client = new BookRESTClient();
  *        Object response = client.XXX(...);
  *        // do whatever with response
  *        client.close();
@@ -23,14 +23,14 @@ import javax.ws.rs.client.WebTarget;
  *
  * @author LinFan
  */
-public class SessionRESTClient {
+public class BookRESTClient {
     private WebTarget webTarget;
     private Client client;
     private static final String BASE_URI = "http://localhost:9999/PersistenceLayer/webresources";
 
-    public SessionRESTClient() {
+    public BookRESTClient() {
         client = javax.ws.rs.client.ClientBuilder.newClient();
-        webTarget = client.target(BASE_URI).path("com.potatoni.entity.ybandmbsession");
+        webTarget = client.target(BASE_URI).path("com.potatoni.entity.book");
     }
 
     public String countREST() throws ClientErrorException {

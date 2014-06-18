@@ -35,7 +35,7 @@ public class YbandmbSession implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
-    @Column(name = "session_id")
+    @Column(name = "sessionId")
     private String sessionId;
     @Basic(optional = false)
     @NotNull

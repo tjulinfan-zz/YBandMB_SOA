@@ -40,6 +40,7 @@ public class YbandmbSessionFacadeREST extends AbstractFacade<YbandmbSession> {
     @Consumes({"application/xml", "application/json"})
     public void create(YbandmbSession entity) {
         super.create(entity);
+        System.out.println(entity);
     }
 
     @PUT

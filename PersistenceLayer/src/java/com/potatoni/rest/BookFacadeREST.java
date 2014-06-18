@@ -10,7 +10,9 @@ import com.potatoni.entity.Book;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -60,7 +62,7 @@ public class BookFacadeREST extends AbstractFacade<Book> {
     public Book find(@PathParam("id") Integer id) {
         return super.find(id);
     }
-
+    
     @GET
     @Override
     @Produces({"application/xml", "application/json"})

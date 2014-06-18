@@ -94,12 +94,12 @@ public class UserWebService {
     public Session logIn(@WebParam(name = "username") String username, @WebParam(name = "password") String password) throws InternalException, PasswordIncorrectException, UserNotExistingException {
         UserRESTClient client = new UserRESTClient();
         SessionRESTClient sessionClient = new SessionRESTClient();
+        Session session = null;
         try {
             User user = client.findByUsername_JSON(User.class, username);
-            if (user.getPassword().equals(password)) {
-                Session session = new Session(CreateID.generate(), user.getId());
+            if (user.getPassword().equals(password)) {       
+                session = new Session(CreateID.generate(), user.getId());
                 sessionClient.create_JSON(session);
-                return session;
             } else {
                 throw new PasswordIncorrectException();
             }
@@ -109,6 +109,8 @@ public class UserWebService {
             throw new InternalException();
         } finally {
             client.close();
+            sessionClient.close();
         }
+        return session;
     }
 }
