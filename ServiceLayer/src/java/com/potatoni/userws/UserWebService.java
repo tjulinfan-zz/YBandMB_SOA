@@ -8,12 +8,17 @@ package com.potatoni.userws;
 import com.potatoni.entity.Session;
 import com.potatoni.entity.User;
 import com.potatoni.exception.InternalException;
+import com.potatoni.exception.InvalidSessionException;
 import com.potatoni.exception.PasswordIncorrectException;
 import com.potatoni.exception.UserNotExistingException;
+import com.potatoni.exception.UserNotLoggedInException;
 import com.potatoni.helper.CreateID;
+import com.potatoni.helper.SessionHelper;
 import com.potatoni.helper.UserHelper;
 import com.potatoni.restclient.SessionRESTClient;
 import com.potatoni.restclient.UserRESTClient;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -116,7 +121,7 @@ public class UserWebService {
     }
 
     /**
-     * Web 服务操作
+     * 根据用户ID获取用户名
      */
     @WebMethod(operationName = "getUsername")
     public String getUsername(@WebParam(name = "userId") int userId) throws UserNotExistingException, InternalException {
@@ -126,6 +131,21 @@ public class UserWebService {
         } catch (ClientErrorException ex) {
             if (ex.getResponse().getStatus() == 404)
                 throw new UserNotExistingException();
+            throw new InternalException();
+        }
+    }
+
+    /**
+     * 根据SessionId返回当前登录的用户
+     */
+    @WebMethod(operationName = "getLogeedUser")
+    public User getLogeedUser(@WebParam(name = "sessionId") String sessionId) throws InternalException, UserNotLoggedInException {
+        try {
+            int userId = SessionHelper.getUserId(sessionId);
+            return UserHelper.getUser(userId);
+        } catch (InvalidSessionException ex) {
+            throw new UserNotLoggedInException();
+        } catch (ClientErrorException ex) {
             throw new InternalException();
         }
     }

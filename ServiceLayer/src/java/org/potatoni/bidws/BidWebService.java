@@ -9,6 +9,7 @@ package org.potatoni.bidws;
 import com.potatoni.bookws.BookWebService;
 import com.potatoni.entity.Bid;
 import com.potatoni.entity.Book;
+import com.potatoni.entity.User;
 import com.potatoni.exception.InternalException;
 import com.potatoni.exception.InvalidSessionException;
 import com.potatoni.exception.PermissionDeniedException;
@@ -17,7 +18,9 @@ import com.potatoni.exception.UserNotLoggedInException;
 import com.potatoni.helper.BidHelper;
 import com.potatoni.helper.BookHelper;
 import com.potatoni.helper.SessionHelper;
+import com.potatoni.helper.UserHelper;
 import com.potatoni.restclient.BidRESTClient;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -121,6 +124,23 @@ public class BidWebService {
         } catch (ClientErrorException e) {
             throw new InternalException();
         } 
+    }
+
+    /**
+     * Web 服务操作
+     */
+    @WebMethod(operationName = "getAllCustomers")
+    public List<User> getAllCustomers(@WebParam(name = "bookId") Integer bookId) throws InternalException {
+        try {
+            List<Bid> bids = BidHelper.getBidsByBookId(bookId);
+            List<User> users = new ArrayList<User>();
+            for (Bid bid : bids) {
+                users.add(UserHelper.getUser(bid.getUserId()));
+            }
+            return users;
+        } catch (ClientErrorException e) {
+            throw new InternalException();
+        }
     }
 
     

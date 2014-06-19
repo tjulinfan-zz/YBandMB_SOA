@@ -5,10 +5,12 @@
  */
 package com.potatoni.orderws;
 
+import com.potatoni.entity.Bid;
 import com.potatoni.entity.OrderForm;
 import com.potatoni.exception.InternalException;
 import com.potatoni.exception.InvalidSessionException;
 import com.potatoni.exception.UserNotLoggedInException;
+import com.potatoni.helper.BidHelper;
 import com.potatoni.helper.OrderHelper;
 import com.potatoni.helper.SessionHelper;
 import java.util.Date;
@@ -28,12 +30,13 @@ public class OrderWebService {
      * 生成订单
      */
     @WebMethod(operationName = "genOrder")
-    public void genOrder(@WebParam(name = "bookId") int bookId, @WebParam(name = "customerId") int customerId, @WebParam(name = "price") float price, @WebParam(name = "sessionId") String sessionId) throws InternalException, UserNotLoggedInException {
+    public void genOrder(@WebParam(name= "bidId")Integer bidId, @WebParam(name = "sessionId") String sessionId) throws InternalException, UserNotLoggedInException {
         try {
+            Bid bid = BidHelper.getBid(bidId);
             OrderForm newOrder = new OrderForm();
-            newOrder.setBookId(bookId);
-            newOrder.setCustomerId(customerId);
-            newOrder.setPrice(price);
+            newOrder.setBookId(bid.getBookId());
+            newOrder.setCustomerId(bid.getUserId());
+            newOrder.setPrice(bid.getPrice());
             newOrder.setSoldDate(new Date());
             newOrder.setSellerId(SessionHelper.getUserId(sessionId));
             OrderHelper.genOrder(newOrder);
