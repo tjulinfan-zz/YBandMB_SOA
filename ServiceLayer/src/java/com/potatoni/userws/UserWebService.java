@@ -11,6 +11,7 @@ import com.potatoni.exception.InternalException;
 import com.potatoni.exception.PasswordIncorrectException;
 import com.potatoni.exception.UserNotExistingException;
 import com.potatoni.helper.CreateID;
+import com.potatoni.helper.UserHelper;
 import com.potatoni.restclient.SessionRESTClient;
 import com.potatoni.restclient.UserRESTClient;
 import javax.jws.WebMethod;
@@ -35,11 +36,11 @@ public class UserWebService {
      * 判断用户是否登录
      */
     @WebMethod(operationName = "isLoggedIn")
-    public Boolean isLoggedIn(@WebParam(name = "sessionid") String sessionid, @WebParam(name = "userid") int userid) throws InternalException {
+    public Boolean isLoggedIn(@WebParam(name = "sessionid") String sessionid) throws InternalException {
         SessionRESTClient client = new SessionRESTClient();
         try {
             Session session = client.find_JSON(Session.class, sessionid);
-            return session.getUserid() == userid;
+            return session != null;
         } catch (ClientErrorException e) {
             if (e.getResponse().getStatus() == STATUS.NOT_FOUND) {
                 return false;
@@ -112,5 +113,20 @@ public class UserWebService {
             sessionClient.close();
         }
         return session;
+    }
+
+    /**
+     * Web 服务操作
+     */
+    @WebMethod(operationName = "getUsername")
+    public String getUsername(@WebParam(name = "userId") int userId) throws UserNotExistingException, InternalException {
+        try {
+            User user = UserHelper.getUser(userId);
+            return user.getUsername();
+        } catch (ClientErrorException ex) {
+            if (ex.getResponse().getStatus() == 404)
+                throw new UserNotExistingException();
+            throw new InternalException();
+        }
     }
 }

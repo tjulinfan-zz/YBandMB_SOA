@@ -11,11 +11,11 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 
 /**
- * Jersey REST client generated for REST resource:BidFacadeREST
- * [com.potatoni.entity.bid]<br>
+ * Jersey REST client generated for REST resource:OrderFormFacadeREST
+ * [com.potatoni.entity.orderform]<br>
  * USAGE:
  * <pre>
- *        BidRESTClient client = new BidRESTClient();
+ *        OrderRESTClient client = new OrderRESTClient();
  *        Object response = client.XXX(...);
  *        // do whatever with response
  *        client.close();
@@ -23,14 +23,14 @@ import javax.ws.rs.client.WebTarget;
  *
  * @author LinFan
  */
-public class BidRESTClient {
+public class OrderRESTClient {
     private WebTarget webTarget;
     private Client client;
     private static final String BASE_URI = "http://localhost:9999/PersistenceLayer/webresources";
 
-    public BidRESTClient() {
+    public OrderRESTClient() {
         client = javax.ws.rs.client.ClientBuilder.newClient();
-        webTarget = client.target(BASE_URI).path("com.potatoni.entity.bid");
+        webTarget = client.target(BASE_URI).path("com.potatoni.entity.orderform");
     }
 
     public String countREST() throws ClientErrorException {
@@ -71,36 +71,12 @@ public class BidRESTClient {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
-    public <T> T findByUserId_XML(Class<T> responseType, String userId) throws ClientErrorException {
-        WebTarget resource = webTarget;
-        resource = resource.path(java.text.MessageFormat.format("userid/{0}", new Object[]{userId}));
-        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_XML).get(responseType);
-    }
-
-    public <T> T findByUserId_JSON(Class<T> responseType, String userId) throws ClientErrorException {
-        WebTarget resource = webTarget;
-        resource = resource.path(java.text.MessageFormat.format("userid/{0}", new Object[]{userId}));
-        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
-    }
-
     public void create_XML(Object requestEntity) throws ClientErrorException {
         webTarget.request(javax.ws.rs.core.MediaType.APPLICATION_XML).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_XML));
     }
 
     public void create_JSON(Object requestEntity) throws ClientErrorException {
         webTarget.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
-    }
-
-    public <T> T findByBookId_XML(Class<T> responseType, String bookId) throws ClientErrorException {
-        WebTarget resource = webTarget;
-        resource = resource.path(java.text.MessageFormat.format("bookid/{0}", new Object[]{bookId}));
-        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_XML).get(responseType);
-    }
-
-    public <T> T findByBookId_JSON(Class<T> responseType, String bookId) throws ClientErrorException {
-        WebTarget resource = webTarget;
-        resource = resource.path(java.text.MessageFormat.format("bookid/{0}", new Object[]{bookId}));
-        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
     public <T> T findAll_XML(Class<T> responseType) throws ClientErrorException {

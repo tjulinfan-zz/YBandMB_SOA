@@ -8,10 +8,12 @@ package com.potatoni.rest;
 
 import com.potatoni.entity.Bid;
 import com.potatoni.exception.ResourceCreateException;
+import com.potatoni.exception.ResourceNotExistsException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -59,7 +61,28 @@ public class BidFacadeREST extends AbstractFacade<Bid> {
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
     public Bid find(@PathParam("id") Integer id) {
-        return super.find(id);
+        Bid bid = super.find(id);
+        if (bid == null)
+            throw new ResourceNotExistsException();
+        return bid;
+    }
+    
+    @GET
+    @Path("/bookid/{bookId}")
+    @Produces({"application/xml", "application/json"})
+    public List<Bid> findByBookId(@PathParam("bookId") Integer bookId) {
+        Query q = em.createQuery("SELECT b FROM Bid b WHERE b.bookId = :bookId");
+        q.setParameter("bookId", bookId);
+        return q.getResultList();
+    }
+    
+    @GET
+    @Path("/userid/{userId}")
+    @Produces({"application/xml", "application/json"})
+    public List<Bid> findByUserId(@PathParam("userId") Integer userId) {
+        Query q = em.createQuery("SELECT b FROM Bid b WHERE b.userId = :userId");
+        q.setParameter("userId", userId);
+        return q.getResultList();
     }
 
     @GET

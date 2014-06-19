@@ -13,6 +13,9 @@
     <service name="BidWebService">
       <implementation-class>org.potatoni.bidws.BidWebService</implementation-class>
     </service>
+    <service name="OrderWebService">
+      <implementation-class>com.potatoni.orderws.OrderWebService</implementation-class>
+    </service>
   </services>
   <clients/>
 </jax-ws>

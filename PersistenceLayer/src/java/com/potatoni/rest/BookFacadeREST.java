@@ -7,6 +7,7 @@
 package com.potatoni.rest;
 
 import com.potatoni.entity.Book;
+import com.potatoni.exception.ResourceNotExistsException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -60,7 +61,37 @@ public class BookFacadeREST extends AbstractFacade<Book> {
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
     public Book find(@PathParam("id") Integer id) {
-        return super.find(id);
+        Book book = super.find(id);
+        if (book == null)
+            throw new ResourceNotExistsException();
+        return book;
+    }
+    
+    @GET
+    @Path("/name/{name}")
+    @Produces({"application/xml", "application/json"})
+    public List<Book> findByName(@PathParam("name") String name) {
+        Query query = em.createQuery("SELECT b FROM Book b, Bookinfo info WHERE b.isbn = info.isbn and info.title like :name");
+        query.setParameter("name", "%" + name.toLowerCase() + "%");
+        return query.getResultList();
+    }
+    
+    @GET
+    @Path("/isbn/{isbn}")
+    @Produces({"application/xml", "application/json"})
+    public List<Book> findByIsbn(@PathParam("isbn") String isbn) {
+        Query query = em.createQuery("SELECT b FROM Book b WHERE b.isbn = :isbn and b.soldDate = NULL");
+        query.setParameter("isbn", isbn);
+        return query.getResultList();
+    }
+    
+    @GET
+    @Path("/ownerid/{ownerId}")
+    @Produces({"application/xml", "application/json"})
+    public List<Book> findByOwnerId(@PathParam("ownerId") Integer ownerId) {
+        Query query = em.createQuery("SELECT b FROM Book b WHERE b.ownerId = :ownerId");
+        query.setParameter("ownerId", ownerId);
+        return query.getResultList();
     }
     
     @GET
