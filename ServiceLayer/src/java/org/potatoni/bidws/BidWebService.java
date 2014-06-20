@@ -130,8 +130,9 @@ public class BidWebService {
      * Web 服务操作
      */
     @WebMethod(operationName = "getAllCustomers")
-    public List<User> getAllCustomers(@WebParam(name = "bookId") Integer bookId) throws InternalException {
+    public List<User> getAllCustomers(@WebParam(name = "bidId") Integer bidId) throws InternalException {
         try {
+            int bookId = BidHelper.getBid(bidId).getBookId();
             List<Bid> bids = BidHelper.getBidsByBookId(bookId);
             List<User> users = new ArrayList<User>();
             for (Bid bid : bids) {
