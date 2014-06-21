@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process
+    name="UserRegisterProcess"
+    targetNamespace="http://enterprise.netbeans.org/bpel/YBandMB_BPEL/DefaultServiceName"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/YBandMB_BPEL/DefaultServiceName"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2"
+    xmlns:sxat="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Attachment"
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:ns0="http://userws.potatoni.com/" xmlns:ns1="http://www.potatoni.com/mailsystem/emailentity">
+    <import namespace="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/UserFolder/UserRegisterWSDL" location="UserRegisterWSDL.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/EmailSystem/SendingEmail" location="../192.168.1.110_9999/EmailSystem/SendingEmail.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/UserWebServiceWrapper" location="UserWebServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://userws.potatoni.com/" location="http://192.168.1.110:9999/ServiceLayer/UserWebService?wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="SendingEmail" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/EmailSystem/SendingEmail" partnerLinkType="tns:SendingEmail" partnerRole="JMSOutPortTypeRole"/>
+        <partnerLink name="UserWSPL" xmlns:tns="http://enterprise.netbeans.org/bpel/UserWebServiceWrapper" partnerLinkType="tns:UserWebServiceLinkType" partnerRole="UserWebServiceRole"/>
+        <partnerLink name="UserRegister" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/UserFolder/UserRegisterWSDL" partnerLinkType="tns:UserRegisterWSDL" myRole="UserRegisterWSDLPortTypeRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="JMSOutOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/EmailSystem/SendingEmail" messageType="tns:JMSInputMessage"/>
+        <variable name="IsUserExistingOut" messageType="ns0:isUserExistingResponse"/>
+        <variable name="IsUserExistingIn" messageType="ns0:isUserExisting"/>
+        <variable name="UserRegisterWSDLOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/UserFolder/UserRegisterWSDL" messageType="tns:UserRegisterWSDLOperationResponse"/>
+        <variable name="RegisterUserOut" xmlns:tns="http://userws.potatoni.com/" messageType="tns:registerUserResponse"/>
+        <variable name="RegisterUserIn" xmlns:tns="http://userws.potatoni.com/" messageType="tns:registerUser"/>
+        <variable name="UserRegisterWSDLOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/UserFolder/UserRegisterWSDL" messageType="tns:UserRegisterWSDLOperationRequest"/>
+    </variables>
+    <sequence>
+        <receive name="ReceiveUserInfo" createInstance="yes" partnerLink="UserRegister" operation="UserRegisterWSDLOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/UserFolder/UserRegisterWSDL" portType="tns:UserRegisterWSDLPortType" variable="UserRegisterWSDLOperationIn"/>
+        <assign name="AssignUserInfo">
+            <copy>
+                <from>$UserRegisterWSDLOperationIn.intputUserRegister/username</from>
+                <to>$IsUserExistingIn.parameters/username</to>
+            </copy>
+            <copy>
+                <from>$UserRegisterWSDLOperationIn.intputUserRegister/username</from>
+                <to>$RegisterUserIn.parameters/username</to>
+            </copy>
+            <copy>
+                <from>$UserRegisterWSDLOperationIn.intputUserRegister/password</from>
+                <to>$RegisterUserIn.parameters/password</to>
+            </copy>
+            <copy>
+                <from>$UserRegisterWSDLOperationIn.intputUserRegister/email</from>
+                <to>$RegisterUserIn.parameters/email</to>
+            </copy>
+            <copy>
+                <from>$UserRegisterWSDLOperationIn.intputUserRegister/phonenumber</from>
+                <to>$RegisterUserIn.parameters/phonenumber</to>
+            </copy>
+            <copy>
+                <from>$UserRegisterWSDLOperationIn.intputUserRegister/address</from>
+                <to>$RegisterUserIn.parameters/address</to>
+            </copy>
+        </assign>
+        <scope name="Scope1">
+            <faultHandlers>
+                <catch faultName="ns0:InternalException" faultVariable="e" faultMessageType="ns0:InternalException">
+                    <throw name="Throw1" faultName="ns0:InternalException" faultVariable="e"/>
+                </catch>
+            </faultHandlers>
+            <invoke name="InvokeIsUserExist" partnerLink="UserWSPL" operation="isUserExisting" portType="ns0:UserWebService" inputVariable="IsUserExistingIn" outputVariable="IsUserExistingOut"/>
+        </scope>
+        <if name="If1">
+            <condition>true() = $IsUserExistingOut.parameters/return</condition>
+            <sequence name="Sequence2">
+                <assign name="AssignFail">
+                    <copy>
+                        <from>false()</from>
+                        <to variable="UserRegisterWSDLOperationOut" part="outputUserRegister"/>
+                    </copy>
+                </assign>
+            </sequence>
+            <else>
+                <sequence name="Sequence1">
+                    <scope name="Scope2">
+                        <faultHandlers>
+                            <catch faultName="ns0:InternalException" faultVariable="e" faultMessageType="ns0:InternalException">
+                                <throw name="Throw2" faultName="ns0:InternalException" faultVariable="e"/>
+                            </catch>
+                        </faultHandlers>
+                        <invoke name="RegisterUser" partnerLink="UserWSPL" operation="registerUser" xmlns:tns="http://userws.potatoni.com/" portType="tns:UserWebService" inputVariable="RegisterUserIn" outputVariable="RegisterUserOut"/>
+
+                    </scope>
+                    <assign name="Assign1">
+                        <copy>
+                            <from>$RegisterUserIn.parameters/email</from>
+                            <to>$JMSOutOperationIn.part1/ns1:mailto</to>
+                        </copy>
+                        <copy>
+                            <from>'Welcome to YBandMB'</from>
+                            <to>$JMSOutOperationIn.part1/ns1:subject</to>
+                        </copy>
+                        <copy>
+                            <from>concat('Hi ', $RegisterUserIn.parameters/username, 'Welcome to YBandMB!')</from>
+                            <to>$JMSOutOperationIn.part1/ns1:message</to>
+                        </copy>
+                    </assign>
+                    <invoke name="Invoke1" partnerLink="SendingEmail" operation="JMSOutOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/EmailSystem/SendingEmail" portType="tns:JMSOutPortType" inputVariable="JMSOutOperationIn"/>
+                    <assign name="AssignSuc">
+                        <copy>
+                            <from>true()</from>
+                            <to variable="UserRegisterWSDLOperationOut" part="outputUserRegister"/>
+                        </copy>
+                    </assign>
+                </sequence>
+            </else>
+        </if>
+        <reply name="Reply" partnerLink="UserRegister" operation="UserRegisterWSDLOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/UserFolder/UserRegisterWSDL" portType="tns:UserRegisterWSDLPortType" variable="UserRegisterWSDLOperationOut"/>
+    </sequence>
+</process>

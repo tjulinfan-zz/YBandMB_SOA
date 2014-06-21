@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process
+    name="OrderGenorder"
+    targetNamespace="http://enterprise.netbeans.org/bpel/YBandMB_BPEL/DefaultServiceName"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/YBandMB_BPEL/DefaultServiceName"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2"
+    xmlns:sxat="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Attachment"
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:ns0="http://www.potatoni.com/mailsystem/emailentity" xmlns:ns1="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/EmailSystem/SendingEmail">
+    <import namespace="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/OrderFolder/OrderGenorder" location="OrderGenorder.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/UserWebServiceWrapper" location="UserWebServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://userws.potatoni.com/" location="http://192.168.1.110:9999/ServiceLayer/UserWebService?wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/BidWebServiceWrapper" location="BidWebServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://bidws.potatoni.org/" location="http://192.168.1.110:9999/ServiceLayer/BidWebService?wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/OrderWebServiceWrapper" location="OrderWebServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://orderws.potatoni.com/" location="http://192.168.1.110:9999/ServiceLayer/OrderWebService?wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/EmailSystem/SendingEmail" location="../192.168.1.110_9999/EmailSystem/SendingEmail.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidGetAllCustomerWSDL" location="../BidFolder/BidGetAllCustomerWSDL.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="BidWSPL" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidGetAllCustomerWSDL" partnerLinkType="tns:BidGetAllCustomerWSDL" partnerRole="BidGetAllCustomerWSDLPortTypeRole"/>
+        <partnerLink name="UserWSPL" xmlns:tns="http://enterprise.netbeans.org/bpel/UserWebServiceWrapper" partnerLinkType="tns:UserWebServiceLinkType" partnerRole="UserWebServiceRole"/>
+        <partnerLink name="OrderWSPL" xmlns:tns="http://enterprise.netbeans.org/bpel/OrderWebServiceWrapper" partnerLinkType="tns:OrderWebServiceLinkType" partnerRole="OrderWebServiceRole"/>
+        <partnerLink name="EmailWSPL" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/EmailSystem/SendingEmail" partnerLinkType="tns:SendingEmail" partnerRole="JMSOutPortTypeRole"/>
+        <partnerLink name="OrderGen" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/OrderFolder/OrderGenorder" partnerLinkType="tns:OrderGenorder" myRole="OrderGenorderPortTypeRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="BidGetAllCustomerWSDLOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidGetAllCustomerWSDL" messageType="tns:BidGetAllCustomerWSDLOperationResponse"/>
+        <variable name="BidGetAllCustomerWSDLOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidGetAllCustomerWSDL" messageType="tns:BidGetAllCustomerWSDLOperationRequest"/>
+        <variable name="JMSOutOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/EmailSystem/SendingEmail" messageType="tns:JMSInputMessage"/>
+        <variable name="OrderGenorderOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/OrderFolder/OrderGenorder" messageType="tns:OrderGenorderOperationResponse"/>
+        <variable name="GenOrderOut" xmlns:tns="http://orderws.potatoni.com/" messageType="tns:genOrderResponse"/>
+        <variable name="GenOrderIn" xmlns:tns="http://orderws.potatoni.com/" messageType="tns:genOrder"/>
+        <variable name="IsLoggedInOut" xmlns:tns="http://userws.potatoni.com/" messageType="tns:isLoggedInResponse"/>
+        <variable name="IsLoggedInIn" xmlns:tns="http://userws.potatoni.com/" messageType="tns:isLoggedIn"/>
+        <variable name="OrderGenorderOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/OrderFolder/OrderGenorder" messageType="tns:OrderGenorderOperationRequest"/>
+    </variables>
+    <sequence>
+        <receive name="ReceiveGenOrder" createInstance="yes" partnerLink="OrderGen" operation="OrderGenorderOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/OrderFolder/OrderGenorder" portType="tns:OrderGenorderPortType" variable="OrderGenorderOperationIn"/>
+        <assign name="Assign1">
+            <copy>
+                <from>$OrderGenorderOperationIn.inputGenOrder/sessionId</from>
+                <to>$IsLoggedInIn.parameters/sessionid</to>
+            </copy>
+            <copy>
+                <from>$OrderGenorderOperationIn.inputGenOrder/bidId</from>
+                <to>$GenOrderIn.parameters/bidId</to>
+            </copy>
+            <copy>
+                <from>$OrderGenorderOperationIn.inputGenOrder/sessionId</from>
+                <to>$GenOrderIn.parameters/sessionId</to>
+            </copy>
+        </assign>
+        <invoke name="InvokeIsLoggedIn" partnerLink="UserWSPL" operation="isLoggedIn" xmlns:tns="http://userws.potatoni.com/" portType="tns:UserWebService" inputVariable="IsLoggedInIn" outputVariable="IsLoggedInOut"/>
+        <if name="If1">
+            <condition>true() = $IsLoggedInOut.parameters/return</condition>
+            <sequence name="Sequence1">
+                <invoke name="InvokeGenOrder" partnerLink="OrderWSPL" operation="genOrder" xmlns:tns="http://orderws.potatoni.com/" portType="tns:OrderWebService" inputVariable="GenOrderIn" outputVariable="GenOrderOut"/>
+                <assign name="Assign5">
+                    <copy>
+                        <from>$OrderGenorderOperationIn.inputGenOrder/bidId</from>
+                        <to>$BidGetAllCustomerWSDLOperationIn.input/bidId</to>
+                    </copy>
+                </assign>
+                <invoke name="Invoke1" partnerLink="BidWSPL" operation="BidGetAllCustomerWSDLOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidGetAllCustomerWSDL" portType="tns:BidGetAllCustomerWSDLPortType" inputVariable="BidGetAllCustomerWSDLOperationIn" outputVariable="BidGetAllCustomerWSDLOperationOut"/>
+                <invoke name="InvokeEmailWSPL" partnerLink="EmailWSPL" operation="JMSOutOperation" portType="ns1:JMSOutPortType" inputVariable="JMSOutOperationIn"/>
+                <assign name="Assign3">
+                    <copy>
+                        <from>true()</from>
+                        <to variable="OrderGenorderOperationOut" part="outputGenOrder"/>
+                    </copy>
+                </assign>
+            </sequence>
+            <else>
+                <assign name="Assign4">
+                    <copy>
+                        <from>false()</from>
+                        <to variable="OrderGenorderOperationOut" part="outputGenOrder"/>
+                    </copy>
+                </assign>
+            </else>
+        </if>
+        <reply name="ReplyGenOrder" partnerLink="OrderGen" operation="OrderGenorderOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/OrderFolder/OrderGenorder" portType="tns:OrderGenorderPortType" variable="OrderGenorderOperationOut"/>
+    </sequence>
+</process>

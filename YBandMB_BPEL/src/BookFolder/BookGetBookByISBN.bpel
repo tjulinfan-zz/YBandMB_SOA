@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process
+    name="BookGetBookByISBN"
+    targetNamespace="http://enterprise.netbeans.org/bpel/YBandMB_BPEL/DefaultServiceName"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/YBandMB_BPEL/DefaultServiceName"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2"
+    xmlns:sxat="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Attachment"
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling">
+    <import namespace="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookGetBookByISBN" location="BookGetBookByISBN.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/BookWebServiceWrapper" location="BookWebServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://bookws.potatoni.com/" location="http://192.168.1.110:9999/ServiceLayer/BookWebService?wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="BookWSPL" xmlns:tns="http://enterprise.netbeans.org/bpel/BookWebServiceWrapper" partnerLinkType="tns:BookGetByISBNWebServiceLinkType" partnerRole="BookWebServiceRole"/>
+        <partnerLink name="BookGetBookByISBN" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookGetBookByISBN" partnerLinkType="tns:BookGetBookByISBN" myRole="BookGetBookByISBNPortTypeRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="SearchBookByIsbnOut" xmlns:tns="http://bookws.potatoni.com/" messageType="tns:searchBookByIsbnResponse"/>
+        <variable name="SearchBookByIsbnIn" xmlns:tns="http://bookws.potatoni.com/" messageType="tns:searchBookByIsbn"/>
+        <variable name="BookGetBookByISBNOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookGetBookByISBN" messageType="tns:BookGetBookByISBNOperationResponse"/>
+        <variable name="BookGetBookByISBNOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookGetBookByISBN" messageType="tns:BookGetBookByISBNOperationRequest"/>
+    </variables>
+    <sequence>
+        <receive name="ReceiveGetByISBN" createInstance="yes" partnerLink="BookGetBookByISBN" operation="BookGetBookByISBNOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookGetBookByISBN" portType="tns:BookGetBookByISBNPortType" variable="BookGetBookByISBNOperationIn"/>
+        <assign name="Assign1">
+            <copy>
+                <from>$BookGetBookByISBNOperationIn.inputSearchBookISBN/isbn</from>
+                <to>$SearchBookByIsbnIn.parameters/isbn</to>
+            </copy>
+        </assign>
+        <scope name="Scope1">
+            <invoke name="InvokeBookWSPL" partnerLink="BookWSPL" operation="searchBookByIsbn" xmlns:tns="http://bookws.potatoni.com/" portType="tns:BookWebService" inputVariable="SearchBookByIsbnIn" outputVariable="SearchBookByIsbnOut"/>
+        </scope>
+        <assign name="Assign2">
+            <copy>
+                <from>$SearchBookByIsbnOut.parameters/return</from>
+                <to>$BookGetBookByISBNOperationOut.outputSearchBookISBN/return</to>
+            </copy>
+        </assign>
+        <reply name="ReplyGetByISBN" partnerLink="BookGetBookByISBN" operation="BookGetBookByISBNOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookGetBookByISBN" portType="tns:BookGetBookByISBNPortType" variable="BookGetBookByISBNOperationOut"/>
+    </sequence>
+</process>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process
+    name="BidBookProcess"
+    targetNamespace="http://enterprise.netbeans.org/bpel/YBandMB_BPEL/DefaultServiceName"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/YBandMB_BPEL/DefaultServiceName"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2"
+    xmlns:sxat="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Attachment"
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling">
+    <import namespace="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidBookWSDL" location="BidBookWSDL.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/UserWebServiceWrapper" location="UserWebServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://userws.potatoni.com/" location="http://192.168.1.110:9999/ServiceLayer/UserWebService?wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/BidWebServiceWrapper" location="BidWebServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://bidws.potatoni.org/" location="http://192.168.1.110:9999/ServiceLayer/BidWebService?wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="UserWSPL" xmlns:tns="http://enterprise.netbeans.org/bpel/UserWebServiceWrapper" partnerLinkType="tns:UserIsLoggedInWebServiceLinkType" partnerRole="UserWebServiceRole"/>
+        <partnerLink name="BidWSPL" xmlns:tns="http://enterprise.netbeans.org/bpel/BidWebServiceWrapper" partnerLinkType="tns:BidBidBookWebServiceLinkType" partnerRole="BidWebServiceRole"/>
+        <partnerLink name="BidBook" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidBookWSDL" partnerLinkType="tns:BidBookWSDL" myRole="BidBookWSDLPortTypeRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="IsLoggedInOut" xmlns:tns="http://userws.potatoni.com/" messageType="tns:isLoggedInResponse"/>
+        <variable name="IsLoggedInIn" xmlns:tns="http://userws.potatoni.com/" messageType="tns:isLoggedIn"/>
+        <variable name="BidBookWSDLOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidBookWSDL" messageType="tns:BidBookWSDLOperationResponse"/>
+        <variable name="BidABookOut" xmlns:tns="http://bidws.potatoni.org/" messageType="tns:bidABookResponse"/>
+        <variable name="BidABookIn" xmlns:tns="http://bidws.potatoni.org/" messageType="tns:bidABook"/>
+        <variable name="BidBookWSDLOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidBookWSDL" messageType="tns:BidBookWSDLOperationRequest"/>
+    </variables>
+    <sequence>
+        <receive name="ReceiveBidBook" createInstance="yes" partnerLink="BidBook" operation="BidBookWSDLOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidBookWSDL" portType="tns:BidBookWSDLPortType" variable="BidBookWSDLOperationIn"/>
+        <assign name="Assign1">
+            <copy>
+                <from>$BidBookWSDLOperationIn.inputBidBook/sessionId</from>
+                <to>$IsLoggedInIn.parameters/sessionid</to>
+            </copy>
+            <copy>
+                <from>$BidBookWSDLOperationIn.inputBidBook/sessionId</from>
+                <to>$BidABookIn.parameters/sessionId</to>
+            </copy>
+            <copy>
+                <from>$BidBookWSDLOperationIn.inputBidBook/bookId</from>
+                <to>$BidABookIn.parameters/bookId</to>
+            </copy>
+            <copy>
+                <from>$BidBookWSDLOperationIn.inputBidBook/price</from>
+                <to>$BidABookIn.parameters/price</to>
+            </copy>
+        </assign>
+        <invoke name="InvokeIsLoggedIn" partnerLink="UserWSPL" operation="isLoggedIn" xmlns:tns="http://userws.potatoni.com/" portType="tns:UserWebService" inputVariable="IsLoggedInIn" outputVariable="IsLoggedInOut"/>
+        <if name="If1">
+            <condition>true() = $IsLoggedInOut.parameters/return</condition>
+            <sequence name="Sequence1">
+                <invoke name="InvokeBidABook" partnerLink="BidWSPL" operation="bidABook" xmlns:tns="http://bidws.potatoni.org/" portType="tns:BidWebService" inputVariable="BidABookIn" outputVariable="BidABookOut"/>
+                <assign name="Assign2">
+                    <copy>
+                        <from variable="BidABookOut" part="parameters"/>
+                        <to variable="BidBookWSDLOperationOut" part="outputBidBook"/>
+                    </copy>
+                </assign>
+            </sequence>
+        </if>
+        <reply name="ReplyBidBook" partnerLink="BidBook" operation="BidBookWSDLOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidBookWSDL" portType="tns:BidBookWSDLPortType" variable="BidBookWSDLOperationOut"/>
+    </sequence>
+</process>

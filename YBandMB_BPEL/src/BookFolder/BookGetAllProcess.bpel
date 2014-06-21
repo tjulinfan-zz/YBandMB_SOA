@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process
+    name="BookGetAllProcess"
+    targetNamespace="http://enterprise.netbeans.org/bpel/YBandMB_BPEL/DefaultServiceName"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/YBandMB_BPEL/DefaultServiceName"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2"
+    xmlns:sxat="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Attachment"
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:ns0="http://bookws.potatoni.com/" xmlns:ns1="http://www.potatoni.com/mailsystem/emailentity">
+    <import namespace="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookGetAllProcess" location="BookGetAllProcess.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/BookWebServiceWrapper" location="BookWebServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://bookws.potatoni.com/" location="http://192.168.1.110:9999/ServiceLayer/BookWebService?wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/EmailSystem/SendingEmail" location="../192.168.1.110_9999/EmailSystem/SendingEmail.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="PartnerLink1" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/EmailSystem/SendingEmail" partnerLinkType="tns:SendingEmail" partnerRole="JMSOutPortTypeRole"/>
+        <partnerLink name="BookWSPL" xmlns:tns="http://enterprise.netbeans.org/bpel/BookWebServiceWrapper" partnerLinkType="tns:BookWebServiceLinkType" partnerRole="BookWebServiceRole"/>
+        <partnerLink name="BookGetAll" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookGetAllProcess" partnerLinkType="tns:BookGetAllProcess" myRole="BookGetAllProcessPortTypeRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="JMSOutOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/EmailSystem/SendingEmail" messageType="tns:JMSInputMessage"/>
+        <variable name="GetAllBooksOut" messageType="ns0:getAllBooksResponse"/>
+        <variable name="GetAllBooksIn" messageType="ns0:getAllBooks"/>
+        <variable name="BookGetAllProcessOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookGetAllProcess" messageType="tns:BookGetAllProcessOperationRequest"/>
+        <variable name="BookGetAllProcessOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookGetAllProcess" messageType="tns:BookGetAllProcessOperationResponse"/>
+    </variables>
+    <sequence>
+        <receive name="ReceiveBookGetAll" createInstance="yes" partnerLink="BookGetAll" operation="BookGetAllProcessOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookGetAllProcess" portType="tns:BookGetAllProcessPortType" variable="BookGetAllProcessOperationIn"/>
+        <assign name="Assign4">
+            <copy>
+                <from>'ybandmb@163.com'</from>
+                <to>$JMSOutOperationIn.part1/ns1:mailto</to>
+            </copy>
+            <copy>
+                <from>'ybandmb@163.com'</from>
+                <to>$JMSOutOperationIn.part1/ns1:subject</to>
+            </copy>
+            <copy>
+                <from>'ybandmb@163.com'</from>
+                <to>$JMSOutOperationIn.part1/ns1:message</to>
+            </copy>
+        </assign>
+        <invoke name="Invoke2" partnerLink="PartnerLink1" operation="JMSOutOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/EmailSystem/SendingEmail" portType="tns:JMSOutPortType" inputVariable="JMSOutOperationIn"/>
+        <assign name="Assign3">
+            <copy>
+                <from variable="BookGetAllProcessOperationIn" part="inputGetAllBook"/>
+                <to variable="GetAllBooksIn" part="parameters"/>
+            </copy>
+        </assign>
+        <scope name="Scope1">
+            <faultHandlers>
+                <catch faultName="ns0:InternalException" faultVariable="e" faultMessageType="ns0:InternalException">
+                    <throw name="Throw1" faultName="ns0:InternalException" faultVariable="e"/>
+                </catch>
+            </faultHandlers>
+            <invoke name="Invoke1" partnerLink="BookWSPL" operation="getAllBooks" portType="ns0:BookWebService" inputVariable="GetAllBooksIn" outputVariable="GetAllBooksOut"/>
+        </scope>
+        <assign name="Assign2">
+            <copy>
+                <from>$GetAllBooksOut.parameters/return</from>
+                <to>$BookGetAllProcessOperationOut.outputGetAllBook/return</to>
+            </copy>
+        </assign>
+        <reply name="ReplyBookGetAll" partnerLink="BookGetAll" operation="BookGetAllProcessOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookGetAllProcess" portType="tns:BookGetAllProcessPortType" variable="BookGetAllProcessOperationOut"/>
+    </sequence>
+</process>

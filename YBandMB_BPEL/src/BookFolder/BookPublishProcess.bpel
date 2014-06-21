@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process
+    name="BookPublishProcess"
+    targetNamespace="http://enterprise.netbeans.org/bpel/YBandMB_BPEL/DefaultServiceName"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/YBandMB_BPEL/DefaultServiceName"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2"
+    xmlns:sxat="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Attachment"
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:ns0="http://bookws.potatoni.com/">
+    <import namespace="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookPublishWSDL" location="BookPublishWSDL.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://userws.potatoni.com/" location="http://192.168.1.110:9999/ServiceLayer/UserWebService?wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/UserWebServiceWrapper" location="UserWebServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/BookinfoWebServiceWrapper" location="BookinfoWebServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://bookinfows.potatoni.com/" location="http://192.168.1.110:9999/ServiceLayer/BookinfoWebService?wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/BookWebServiceWrapper" location="BookWebServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://bookws.potatoni.com/" location="http://192.168.1.110:9999/ServiceLayer/BookWebService?wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="BookInfoWSPL" xmlns:tns="http://enterprise.netbeans.org/bpel/BookinfoWebServiceWrapper" partnerLinkType="tns:BookinfoWebServiceLinkType" partnerRole="BookinfoWebServiceRole"/>
+        <partnerLink name="BookWSPL" xmlns:tns="http://enterprise.netbeans.org/bpel/BookWebServiceWrapper" partnerLinkType="tns:BookPublishToSellWebServiceLinkType" partnerRole="BookWebServiceRole"/>
+        <partnerLink name="UserWSPL" xmlns:tns="http://enterprise.netbeans.org/bpel/UserWebServiceWrapper" partnerLinkType="tns:UserWebServiceLinkType" partnerRole="UserWebServiceRole"/>
+        <partnerLink name="BookPublish" xmlns:tns1="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookPublishWSDL" partnerLinkType="tns1:BookPublishWSDL" myRole="BookPublishPortTypeRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="AddNewBookinfoOut" xmlns:tns="http://bookinfows.potatoni.com/" messageType="tns:addNewBookinfoResponse"/>
+        <variable name="AddNewBookinfoIn" xmlns:tns="http://bookinfows.potatoni.com/" messageType="tns:addNewBookinfo"/>
+        <variable name="IsBookinfoExistingOut" xmlns:tns="http://bookinfows.potatoni.com/" messageType="tns:isBookinfoExistingResponse"/>
+        <variable name="IsBookinfoExistingIn" xmlns:tns="http://bookinfows.potatoni.com/" messageType="tns:isBookinfoExisting"/>
+        <variable name="PublishBookToSellOut" xmlns:tns="http://bookws.potatoni.com/" messageType="tns:publishBookToSellResponse"/>
+        <variable name="PublishBookToSellIn" xmlns:tns="http://bookws.potatoni.com/" messageType="tns:publishBookToSell"/>
+        <variable name="IsLoggedInOut" xmlns:tns="http://userws.potatoni.com/" messageType="tns:isLoggedInResponse"/>
+        <variable name="IsLoggedInIn" xmlns:tns="http://userws.potatoni.com/" messageType="tns:isLoggedIn"/>
+        <variable name="BookPublishOperationOut" xmlns:tns1="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookPublishWSDL" messageType="tns1:BookPublishOperationResponse"/>
+        <variable name="BookPublishOperationIn" xmlns:tns1="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookPublishWSDL" messageType="tns1:BookPublishOperationRequest"/>
+    </variables>
+    <sequence>
+        <receive name="ReceiveBookPublishInfo" createInstance="yes" partnerLink="BookPublish" operation="BookPublishOperation" xmlns:tns1="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookPublishWSDL" portType="tns1:BookPublishPortType" variable="BookPublishOperationIn"/>
+        <assign name="Assign1">
+            <copy>
+                <from>$BookPublishOperationIn.inputBookPublish/isbn</from>
+                <to>$PublishBookToSellIn.parameters/isbn</to>
+            </copy>
+            <copy>
+                <from>$BookPublishOperationIn.inputBookPublish/description</from>
+                <to>$PublishBookToSellIn.parameters/description</to>
+            </copy>
+            <copy>
+                <from>$BookPublishOperationIn.inputBookPublish/price</from>
+                <to>$PublishBookToSellIn.parameters/price</to>
+            </copy>
+            <copy>
+                <from>$BookPublishOperationIn.inputBookPublish/sessionkey</from>
+                <to>$PublishBookToSellIn.parameters/sessionkey</to>
+            </copy>
+            <copy>
+                <from>$BookPublishOperationIn.inputBookPublish/sessionkey</from>
+                <to>$IsLoggedInIn.parameters/sessionid</to>
+            </copy>
+        </assign>
+        <scope name="Scope1">
+            <invoke name="InvokeIsLoggedIn" partnerLink="UserWSPL" operation="isLoggedIn" xmlns:tns="http://userws.potatoni.com/" portType="tns:UserWebService" inputVariable="IsLoggedInIn" outputVariable="IsLoggedInOut"/>
+        </scope>
+        <if name="If1">
+            <condition>true() = $IsLoggedInOut.parameters/return</condition>
+            <sequence name="Sequence1">
+                <assign name="Assign4">
+                    <copy>
+                        <from>$BookPublishOperationIn.inputBookPublish/isbn</from>
+                        <to>$IsBookinfoExistingIn.parameters/isbn</to>
+                    </copy>
+                </assign>
+                <invoke name="InvokeIsBookInfoExisting" partnerLink="BookInfoWSPL" operation="isBookinfoExisting" xmlns:tns="http://bookinfows.potatoni.com/" portType="tns:BookinfoWebService" inputVariable="IsBookinfoExistingIn" outputVariable="IsBookinfoExistingOut"/>
+                <if name="If2">
+                    <condition>true() = $IsBookinfoExistingOut.parameters/return</condition>
+                    <empty name="Empty1"/>
+                    <else>
+                        <sequence name="Sequence3">
+                            <assign name="Assign5">
+                                <copy>
+                                    <from>$BookPublishOperationIn.inputBookPublish/isbn</from>
+                                    <to>$AddNewBookinfoIn.parameters/isbn</to>
+                                </copy>
+                            </assign>
+                            <invoke name="InvokeAddBookInfo" partnerLink="BookInfoWSPL" operation="addNewBookinfo" xmlns:tns="http://bookinfows.potatoni.com/" portType="tns:BookinfoWebService" inputVariable="AddNewBookinfoIn" outputVariable="AddNewBookinfoOut"/>
+                        </sequence>
+                    </else>
+                </if>
+                <sequence name="Sequence2">
+                    <scope name="Scope2">
+                            <invoke name="InvokePublishBook" partnerLink="BookWSPL" operation="publishBookToSell" portType="ns0:BookWebService" inputVariable="PublishBookToSellIn" outputVariable="PublishBookToSellOut"/>
+                        </scope>
+                        <assign name="Assign2">
+                            <copy>
+                                    <from>true()</from>
+                                        <to variable="BookPublishOperationOut" part="outputBookPublish"/>
+                                </copy>
+                        </assign>
+                </sequence>
+            </sequence>
+            <else>
+                <assign name="Assign3">
+                    <copy>
+                        <from>false()</from>
+                        <to variable="BookPublishOperationOut" part="outputBookPublish"/>
+                    </copy>
+                </assign>
+            </else>
+        </if>
+        <reply name="ReplyBookPublishInfo" partnerLink="BookPublish" operation="BookPublishOperation" xmlns:tns1="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookPublishWSDL" portType="tns1:BookPublishPortType" variable="BookPublishOperationOut"/>
+    </sequence>
+</process>

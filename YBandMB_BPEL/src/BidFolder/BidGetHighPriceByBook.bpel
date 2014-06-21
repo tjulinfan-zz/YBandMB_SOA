@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process
+    name="BidGetHighPriceByBook"
+    targetNamespace="http://enterprise.netbeans.org/bpel/YBandMB_BPEL/DefaultServiceName"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/YBandMB_BPEL/DefaultServiceName"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2"
+    xmlns:sxat="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Attachment"
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling">
+    <import namespace="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidGetHighPriceByBook" location="BidGetHighPriceByBook.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/BidWebServiceWrapper" location="BidWebServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://bidws.potatoni.org/" location="http://192.168.1.110:9999/ServiceLayer/BidWebService?wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="BidWSPL" xmlns:tns="http://enterprise.netbeans.org/bpel/BidWebServiceWrapper" partnerLinkType="tns:BidGetHighestPriceWebServiceLinkType" partnerRole="BidWebServiceRole"/>
+        <partnerLink name="BidGetHighestPrice" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidGetHighPriceByBook" partnerLinkType="tns:BidGetHighPriceByBook" myRole="BidGetHighPriceByBookPortTypeRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="BidGetHighPriceByBookOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidGetHighPriceByBook" messageType="tns:BidGetHighPriceByBookOperationResponse"/>
+        <variable name="GetHighestBidPriceOut" xmlns:tns="http://bidws.potatoni.org/" messageType="tns:getHighestBidPriceResponse"/>
+        <variable name="GetHighestBidPriceIn" xmlns:tns="http://bidws.potatoni.org/" messageType="tns:getHighestBidPrice"/>
+        <variable name="BidGetHighPriceByBookOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidGetHighPriceByBook" messageType="tns:BidGetHighPriceByBookOperationRequest"/>
+    </variables>
+    <sequence>
+        <receive name="Receive" createInstance="yes" partnerLink="BidGetHighestPrice" operation="BidGetHighPriceByBookOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidGetHighPriceByBook" portType="tns:BidGetHighPriceByBookPortType" variable="BidGetHighPriceByBookOperationIn"/>
+        <assign name="Assign1">
+            <copy>
+                <from>$BidGetHighPriceByBookOperationIn.inputHighestPrice/bookId</from>
+                <to>$GetHighestBidPriceIn.parameters/bookId</to>
+            </copy>
+        </assign>
+        <scope name="Scope1">
+            <invoke name="InvokeBidWSPL" partnerLink="BidWSPL" operation="getHighestBidPrice" xmlns:tns="http://bidws.potatoni.org/" portType="tns:BidWebService" inputVariable="GetHighestBidPriceIn" outputVariable="GetHighestBidPriceOut"/>
+        </scope>
+        <assign name="Assign2">
+            <copy>
+                <from>$GetHighestBidPriceOut.parameters/return</from>
+                <to>$BidGetHighPriceByBookOperationOut.outputHighestPrice/return</to>
+            </copy>
+        </assign>
+        <reply name="Reply" partnerLink="BidGetHighestPrice" operation="BidGetHighPriceByBookOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidGetHighPriceByBook" portType="tns:BidGetHighPriceByBookPortType" variable="BidGetHighPriceByBookOperationOut"/>
+    </sequence>
+</process>

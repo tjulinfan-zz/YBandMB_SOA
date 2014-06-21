@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="BookGetBookByISBN" targetNamespace="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookGetBookByISBN"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookGetBookByISBN" xmlns:ns="http://bookws.potatoni.com/" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <types>
+        <xsd:schema targetNamespace="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookGetBookByISBN">
+            <xsd:import namespace="http://bookws.potatoni.com/" schemaLocation="http://192.168.1.110:9999/ServiceLayer/BookWebService?xsd=1"/>
+        </xsd:schema>
+    </types>
+    <message name="BookGetBookByISBNOperationRequest">
+        <part name="inputSearchBookISBN" element="ns:searchBookByIsbn"/>
+    </message>
+    <message name="BookGetBookByISBNOperationResponse">
+        <part name="outputSearchBookISBN" element="ns:searchBookByIsbnResponse"/>
+    </message>
+    <portType name="BookGetBookByISBNPortType">
+        <operation name="BookGetBookByISBNOperation">
+            <input name="input1" message="tns:BookGetBookByISBNOperationRequest"/>
+            <output name="output1" message="tns:BookGetBookByISBNOperationResponse"/>
+        </operation>
+    </portType>
+    <binding name="BookGetBookByISBNBinding" type="tns:BookGetBookByISBNPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="BookGetBookByISBNOperation">
+            <soap:operation/>
+            <input name="input1">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output1">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="BookGetBookByISBNService">
+        <port name="BookGetBookByISBNPort" binding="tns:BookGetBookByISBNBinding">
+            <soap:address location="http://localhost:${HttpDefaultPort}/BookGetBookByISBNService/BookGetBookByISBNPort"/>
+        </port>
+    </service>
+    <plnk:partnerLinkType name="BookGetBookByISBN">
+        <!-- A partner link type is automatically generated when a new port type is added. Partner link types are used by BPEL processes. 
+In a BPEL process, a partner link represents the interaction between the BPEL process and a partner service. Each partner link is associated with a partner link type.
+A partner link type characterizes the conversational relationship between two services. The partner link type can have one or two roles.-->
+        <plnk:role name="BookGetBookByISBNPortTypeRole" portType="tns:BookGetBookByISBNPortType"/>
+    </plnk:partnerLinkType>
+</definitions>
