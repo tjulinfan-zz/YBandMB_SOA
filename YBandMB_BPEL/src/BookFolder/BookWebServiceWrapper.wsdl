@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<definitions
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="BookWebServiceWrapper" targetNamespace="http://enterprise.netbeans.org/bpel/BookWebServiceWrapper" xmlns:tns="http://enterprise.netbeans.org/bpel/BookWebServiceWrapper" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns="http://bookws.potatoni.com/">
+    <import location="http://192.168.1.110:9999/ServiceLayer/BookWebService?wsdl" namespace="http://bookws.potatoni.com/"/>
+    <plnk:partnerLinkType name="BookWebServiceLinkType">
+        <plnk:role name="BookWebServiceRole" portType="ns:BookWebService"/>
+    </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="BookGetByNameWebServiceLinkType">
+        <plnk:role name="BookWebServiceRole" portType="ns:BookWebService"/>
+    </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="BookGetOwnerWebServiceLinkType">
+        <plnk:role name="BookWebServiceRole" portType="ns:BookWebService"/>
+    </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="BookGetByOwnerWebServiceLinkType">
+        <plnk:role name="BookWebServiceRole" portType="ns:BookWebService"/>
+    </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="BookPublishToSellWebServiceLinkType">
+        <plnk:role name="BookWebServiceRole" portType="ns:BookWebService"/>
+    </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="BookGetByISBNWebServiceLinkType">
+        <plnk:role name="BookWebServiceRole" portType="ns:BookWebService"/>
+    </plnk:partnerLinkType>
+</definitions>

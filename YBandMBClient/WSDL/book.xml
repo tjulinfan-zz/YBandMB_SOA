@@ -1,0 +1,135 @@
+<xs:schema xmlns:tns="http://bookws.potatoni.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://bookws.potatoni.com/">
+<xs:element name="BookNotExistingException" type="tns:BookNotExistingException"/>
+<xs:element name="InternalException" type="tns:InternalException"/>
+<xs:element name="UserNotLoggedInException" type="tns:UserNotLoggedInException"/>
+<xs:element name="getAllBooks" type="tns:getAllBooks"/>
+<xs:element name="getAllBooksResponse" type="tns:getAllBooksResponse"/>
+<xs:element name="getBook" type="tns:getBook"/>
+<xs:element name="getBookResponse" type="tns:getBookResponse"/>
+<xs:element name="getOwnedBooks" type="tns:getOwnedBooks"/>
+<xs:element name="getOwnedBooksResponse" type="tns:getOwnedBooksResponse"/>
+<xs:element name="publishBookToSell" type="tns:publishBookToSell"/>
+<xs:element name="publishBookToSellResponse" type="tns:publishBookToSellResponse"/>
+<xs:element name="searchBookByIsbn" type="tns:searchBookByIsbn"/>
+<xs:element name="searchBookByIsbnResponse" type="tns:searchBookByIsbnResponse"/>
+<xs:element name="searchBookByName" type="tns:searchBookByName"/>
+<xs:element name="searchBookByNameResponse" type="tns:searchBookByNameResponse"/>
+<xs:element name="setBookSold" type="tns:setBookSold"/>
+<xs:element name="setBookSoldResponse" type="tns:setBookSoldResponse"/>
+<xs:complexType name="setBookSold">
+<xs:sequence>
+<xs:element name="bookId" type="xs:int"/>
+<xs:element name="soldDate" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="sessionkey" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="setBookSoldResponse">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="InternalException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getAllBooks">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="getAllBooksResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:bookWithInfo" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="bookWithInfo">
+<xs:sequence>
+<xs:element name="description" type="xs:string" minOccurs="0"/>
+<xs:element name="id" type="xs:int" minOccurs="0"/>
+<xs:element name="info" type="tns:bookinfo" minOccurs="0"/>
+<xs:element name="ownerId" type="xs:int"/>
+<xs:element name="price" type="xs:float"/>
+<xs:element name="soldDate" type="xs:dateTime" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="bookinfo">
+<xs:sequence>
+<xs:element name="author" type="xs:string" minOccurs="0"/>
+<xs:element name="doubanurl" type="xs:string" minOccurs="0"/>
+<xs:element name="imgurl" type="xs:string" minOccurs="0"/>
+<xs:element name="isbn" type="xs:string" minOccurs="0"/>
+<xs:element name="pubdate" type="xs:string" minOccurs="0"/>
+<xs:element name="publisher" type="xs:string" minOccurs="0"/>
+<xs:element name="summary" type="xs:string" minOccurs="0"/>
+<xs:element name="title" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getBook">
+<xs:sequence>
+<xs:element name="bookid" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getBookResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:book" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="book">
+<xs:sequence>
+<xs:element name="description" type="xs:string" minOccurs="0"/>
+<xs:element name="id" type="xs:int" minOccurs="0"/>
+<xs:element name="isbn" type="xs:string" minOccurs="0"/>
+<xs:element name="ownerId" type="xs:int"/>
+<xs:element name="price" type="xs:float"/>
+<xs:element name="soldDate" type="xs:dateTime" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BookNotExistingException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getOwnedBooks">
+<xs:sequence>
+<xs:element name="sessionId" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getOwnedBooksResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:bookWithInfo" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="UserNotLoggedInException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="publishBookToSell">
+<xs:sequence>
+<xs:element name="sessionkey" type="xs:string" minOccurs="0"/>
+<xs:element name="isbn" type="xs:string" minOccurs="0"/>
+<xs:element name="description" type="xs:string" minOccurs="0"/>
+<xs:element name="price" type="xs:float"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="publishBookToSellResponse">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="searchBookByIsbn">
+<xs:sequence>
+<xs:element name="isbn" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="searchBookByIsbnResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:bookWithInfo" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="searchBookByName">
+<xs:sequence>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="searchBookByNameResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:bookWithInfo" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

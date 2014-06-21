@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process
+    name="BookInfoAddProcess"
+    targetNamespace="http://enterprise.netbeans.org/bpel/YBandMB_BPEL/DefaultServiceName"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/YBandMB_BPEL/DefaultServiceName"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2"
+    xmlns:sxat="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Attachment"
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:ns0="http://bookinfows.potatoni.com/">
+    <import namespace="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookInfofolder/BookInfoAddWSDL" location="BookInfoAddWSDL.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/BookinfoWebServiceWrapper" location="BookinfoWebServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://bookinfows.potatoni.com/" location="http://192.168.1.110:9999/ServiceLayer/BookinfoWebService?wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="BookInfoAdd" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookInfofolder/BookInfoAddWSDL" partnerLinkType="tns:BookInfoAddWSDL" myRole="BookInfoAddWSDLPortTypeRole"/>
+        <partnerLink name="BookInfo_PL" xmlns:tns="http://enterprise.netbeans.org/bpel/BookinfoWebServiceWrapper" partnerLinkType="tns:BookinfoWebServiceLinkType" partnerRole="BookinfoWebServiceRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="BookInfoAddWSDLOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookInfofolder/BookInfoAddWSDL" messageType="tns:BookInfoAddWSDLOperationResponse"/>
+        <variable name="AddNewBookinfoOut" xmlns:tns="http://bookinfows.potatoni.com/" messageType="tns:addNewBookinfoResponse"/>
+        <variable name="AddNewBookinfoIn" xmlns:tns="http://bookinfows.potatoni.com/" messageType="tns:addNewBookinfo"/>
+        <variable name="IsBookinfoExistingOut" xmlns:tns="http://bookinfows.potatoni.com/" messageType="tns:isBookinfoExistingResponse"/>
+        <variable name="IsBookinfoExistingIn" xmlns:tns="http://bookinfows.potatoni.com/" messageType="tns:isBookinfoExisting"/>
+        <variable name="BookInfoAddWSDLOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookInfofolder/BookInfoAddWSDL" messageType="tns:BookInfoAddWSDLOperationRequest"/>
+    </variables>
+    <sequence>
+        <receive name="ReceiveBookInfo" createInstance="yes" partnerLink="BookInfoAdd" operation="BookInfoAddWSDLOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookInfofolder/BookInfoAddWSDL" portType="tns:BookInfoAddWSDLPortType" variable="BookInfoAddWSDLOperationIn"/>
+        <assign name="Assign1">
+            <copy>
+                <from>$BookInfoAddWSDLOperationIn.inputBookInfo/isbn</from>
+                <to>$IsBookinfoExistingIn.parameters/isbn</to>
+            </copy>
+            <copy>
+                <from>$BookInfoAddWSDLOperationIn.inputBookInfo/isbn</from>
+                <to>$AddNewBookinfoIn.parameters/isbn</to>
+            </copy>
+        </assign>
+        <scope name="Scope1">
+            <faultHandlers>
+                <catch faultName="ns0:InternalException" faultVariable="e" faultMessageType="ns0:InternalException">
+                    <throw name="Throw1" faultName="ns0:InternalException" faultVariable="e"/>
+                </catch>
+            </faultHandlers>
+            <invoke name="InvokeIsExistingBook" partnerLink="BookInfo_PL" operation="isBookinfoExisting" xmlns:tns="http://bookinfows.potatoni.com/" portType="tns:BookinfoWebService" inputVariable="IsBookinfoExistingIn" outputVariable="IsBookinfoExistingOut"/>
+        </scope>
+        <if name="If1">
+            <condition>true() = $IsBookinfoExistingOut.parameters/return</condition>
+            <assign name="Assign2">
+                <copy>
+                    <from>false()</from>
+                    <to variable="BookInfoAddWSDLOperationOut" part="outputBookInfo"/>
+                </copy>
+            </assign>
+            <else>
+                <sequence name="Sequence1">
+                    <scope name="Scope2">
+                        <faultHandlers>
+                            <catch faultName="ns0:InternalException" faultVariable="e" faultMessageType="ns0:InternalException">
+                                <throw name="Throw2" faultName="ns0:InternalException" faultVariable="e"/>
+                            </catch>
+                        </faultHandlers>
+                        <invoke name="InvokeAddBookInfo" partnerLink="BookInfo_PL" operation="addNewBookinfo" xmlns:tns="http://bookinfows.potatoni.com/" portType="tns:BookinfoWebService" inputVariable="AddNewBookinfoIn" outputVariable="AddNewBookinfoOut"/>
+                    </scope>
+                    <assign name="Assign3">
+                        <copy>
+                            <from>true()</from>
+                            <to variable="BookInfoAddWSDLOperationOut" part="outputBookInfo"/>
+                        </copy>
+                    </assign>
+                </sequence>
+            </else>
+        </if>
+        <reply name="ReplyBookInfoAdd" partnerLink="BookInfoAdd" operation="BookInfoAddWSDLOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookInfofolder/BookInfoAddWSDL" portType="tns:BookInfoAddWSDLPortType" variable="BookInfoAddWSDLOperationOut"/>
+    </sequence>
+</process>

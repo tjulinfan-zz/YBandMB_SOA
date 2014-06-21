@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.3 (tags/2.3-7528; 2013-04-29T19:34:10+0000) JAXWS-RI/2.2.8 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://bidws.potatoni.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://bidws.potatoni.org/">
+
+<xs:element name="InternalException" type="tns:InternalException"/>
+
+<xs:element name="PermissionDeniedException" type="tns:PermissionDeniedException"/>
+
+<xs:element name="UserNotExistingException" type="tns:UserNotExistingException"/>
+
+<xs:element name="UserNotLoggedInException" type="tns:UserNotLoggedInException"/>
+
+<xs:element name="bidABook" type="tns:bidABook"/>
+
+<xs:element name="bidABookResponse" type="tns:bidABookResponse"/>
+
+<xs:element name="getAllBids" type="tns:getAllBids"/>
+
+<xs:element name="getAllBidsOfAUser" type="tns:getAllBidsOfAUser"/>
+
+<xs:element name="getAllBidsOfAUserResponse" type="tns:getAllBidsOfAUserResponse"/>
+
+<xs:element name="getAllBidsResponse" type="tns:getAllBidsResponse"/>
+
+<xs:element name="getAllCustomers" type="tns:getAllCustomers"/>
+
+<xs:element name="getAllCustomersResponse" type="tns:getAllCustomersResponse"/>
+
+<xs:element name="getHighestBidPrice" type="tns:getHighestBidPrice"/>
+
+<xs:element name="getHighestBidPriceResponse" type="tns:getHighestBidPriceResponse"/>
+
+<xs:element name="updateBidPrice" type="tns:updateBidPrice"/>
+
+<xs:element name="updateBidPriceResponse" type="tns:updateBidPriceResponse"/>
+
+<xs:complexType name="getHighestBidPrice">
+<xs:sequence>
+<xs:element name="bookId" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getHighestBidPriceResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:double" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="InternalException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getAllBidsOfAUser">
+<xs:sequence>
+<xs:element name="sessionId" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getAllBidsOfAUserResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:bid" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="bid">
+<xs:sequence>
+<xs:element name="bidDate" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="bookId" type="xs:int"/>
+<xs:element name="id" type="xs:int" minOccurs="0"/>
+<xs:element name="price" type="xs:float"/>
+<xs:element name="userId" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="UserNotLoggedInException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getAllBids">
+<xs:sequence>
+<xs:element name="sessionId" type="xs:string" minOccurs="0"/>
+<xs:element name="bookId" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getAllBidsResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:bid" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="PermissionDeniedException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="updateBidPrice">
+<xs:sequence>
+<xs:element name="sessionId" type="xs:string" minOccurs="0"/>
+<xs:element name="bidId" type="xs:int"/>
+<xs:element name="price" type="xs:float"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="updateBidPriceResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="bidABook">
+<xs:sequence>
+<xs:element name="sessionId" type="xs:string" minOccurs="0"/>
+<xs:element name="bookId" type="xs:int"/>
+<xs:element name="price" type="xs:float"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="bidABookResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="UserNotExistingException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getAllCustomers">
+<xs:sequence>
+<xs:element name="bidId" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getAllCustomersResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:user" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="user">
+<xs:sequence>
+<xs:element name="address" type="xs:string" minOccurs="0"/>
+<xs:element name="email" type="xs:string" minOccurs="0"/>
+<xs:element name="id" type="xs:int" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+<xs:element name="phonenum" type="xs:string" minOccurs="0"/>
+<xs:element name="username" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

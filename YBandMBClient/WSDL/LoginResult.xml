@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+    <SOAP-ENV:Body>
+        <ns1:logInResponse xmlns:msgns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/UserFolder/UserLoginWSDL" xmlns:ns1="http://userws.potatoni.com/">
+            <return xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns2="http://userws.potatoni.com/" xmlns="">
+                <sessionId>146ae4d16971116</sessionId>
+                <userid>17</userid>
+            </return>
+        </ns1:logInResponse>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process
+    name="BidGetAllCustomerProcess"
+    targetNamespace="http://enterprise.netbeans.org/bpel/YBandMB_BPEL/DefaultServiceName"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/YBandMB_BPEL/DefaultServiceName"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2"
+    xmlns:sxat="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Attachment"
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling">
+    <import namespace="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidGetAllCustomerWSDL" location="BidGetAllCustomerWSDL.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/BidWebServiceWrapper" location="BidWebServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://bidws.potatoni.org/" location="http://192.168.1.110:9999/ServiceLayer/BidWebService?wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="BidWSPL" xmlns:tns="http://enterprise.netbeans.org/bpel/BidWebServiceWrapper" partnerLinkType="tns:BidGetAllCustomersWebServiceLinkType" partnerRole="BidWebServiceRole"/>
+        <partnerLink name="BidGetAllCustomer" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidGetAllCustomerWSDL" partnerLinkType="tns:BidGetAllCustomerWSDL" myRole="BidGetAllCustomerWSDLPortTypeRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="GetAllCustomersOut" xmlns:tns="http://bidws.potatoni.org/" messageType="tns:getAllCustomersResponse"/>
+        <variable name="GetAllCustomersIn" xmlns:tns="http://bidws.potatoni.org/" messageType="tns:getAllCustomers"/>
+        <variable name="BidGetAllCustomerWSDLOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidGetAllCustomerWSDL" messageType="tns:BidGetAllCustomerWSDLOperationResponse"/>
+        <variable name="BidGetAllCustomerWSDLOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidGetAllCustomerWSDL" messageType="tns:BidGetAllCustomerWSDLOperationRequest"/>
+    </variables>
+    <sequence>
+        <receive name="Receive1" createInstance="yes" partnerLink="BidGetAllCustomer" operation="BidGetAllCustomerWSDLOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidGetAllCustomerWSDL" portType="tns:BidGetAllCustomerWSDLPortType" variable="BidGetAllCustomerWSDLOperationIn"/>
+        <assign name="Assign1">
+            <copy>
+                <from>$BidGetAllCustomerWSDLOperationIn.input/bidId</from>
+                <to>$GetAllCustomersIn.parameters/bidId</to>
+            </copy>
+        </assign>
+        <invoke name="Invoke1" partnerLink="BidWSPL" operation="getAllCustomers" xmlns:tns="http://bidws.potatoni.org/" portType="tns:BidWebService" inputVariable="GetAllCustomersIn" outputVariable="GetAllCustomersOut"/>
+        <assign name="Assign2">
+            <copy>
+                <from>$GetAllCustomersOut.parameters/return</from>
+                <to>$BidGetAllCustomerWSDLOperationOut.output/return</to>
+            </copy>
+        </assign>
+        <reply name="Reply1" partnerLink="BidGetAllCustomer" operation="BidGetAllCustomerWSDLOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidGetAllCustomerWSDL" portType="tns:BidGetAllCustomerWSDLPortType" variable="BidGetAllCustomerWSDLOperationOut"/>
+    </sequence>
+</process>

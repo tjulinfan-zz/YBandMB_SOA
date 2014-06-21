@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process
+    name="BidGetAllBidsProcess"
+    targetNamespace="http://enterprise.netbeans.org/bpel/YBandMB_BPEL/DefaultServiceName"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/YBandMB_BPEL/DefaultServiceName"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2"
+    xmlns:sxat="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Attachment"
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling">
+    <import namespace="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidsGetAllBidsProcess" location="BidGetAllBidsWSDL.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/BidWebServiceWrapper" location="BidWebServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://bidws.potatoni.org/" location="http://192.168.1.110:9999/ServiceLayer/BidWebService?wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="BidWSPL" xmlns:tns="http://enterprise.netbeans.org/bpel/BidWebServiceWrapper" partnerLinkType="tns:BidGetAllBidsWebServiceLinkType" partnerRole="BidWebServiceRole"/>
+        <partnerLink name="BidsGetAllBIds" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidsGetAllBidsProcess" partnerLinkType="tns:BidsGetAllBidsProcess" myRole="BidsGetAllBidsProcessPortTypeRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="BidsGetAllBidsProcessOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidsGetAllBidsProcess" messageType="tns:BidsGetAllBidsProcessOperationResponse"/>
+        <variable name="GetAllBidsOfAUserOut" xmlns:tns="http://bidws.potatoni.org/" messageType="tns:getAllBidsOfAUserResponse"/>
+        <variable name="GetAllBidsOfAUserIn" xmlns:tns="http://bidws.potatoni.org/" messageType="tns:getAllBidsOfAUser"/>
+        <variable name="BidsGetAllBidsProcessOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidsGetAllBidsProcess" messageType="tns:BidsGetAllBidsProcessOperationRequest"/>
+    </variables>
+    <sequence>
+        <receive name="Receive1" createInstance="yes" partnerLink="BidsGetAllBIds" operation="BidsGetAllBidsProcessOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidsGetAllBidsProcess" portType="tns:BidsGetAllBidsProcessPortType" variable="BidsGetAllBidsProcessOperationIn"/>
+        <assign name="Assign1">
+            <copy>
+                <from>$BidsGetAllBidsProcessOperationIn.inputGetAllBids/sessionId</from>
+                <to>$GetAllBidsOfAUserIn.parameters/sessionId</to>
+            </copy>
+        </assign>
+        <invoke name="Invoke1" partnerLink="BidWSPL" operation="getAllBidsOfAUser" xmlns:tns="http://bidws.potatoni.org/" portType="tns:BidWebService" inputVariable="GetAllBidsOfAUserIn" outputVariable="GetAllBidsOfAUserOut"/>
+        <assign name="Assign2">
+            <copy>
+                <from>$GetAllBidsOfAUserOut.parameters/return</from>
+                <to>$BidsGetAllBidsProcessOperationOut.outputGetAllBids/return</to>
+            </copy>
+        </assign>
+        <reply name="Reply1" partnerLink="BidsGetAllBIds" operation="BidsGetAllBidsProcessOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidsGetAllBidsProcess" portType="tns:BidsGetAllBidsProcessPortType" variable="BidsGetAllBidsProcessOperationOut"/>
+    </sequence>
+</process>

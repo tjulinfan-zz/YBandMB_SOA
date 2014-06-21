@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<casa xmlns="http://java.sun.com/xml/ns/casa" xmlns:ns1="http://userws.potatoni.com/" xmlns:ns10="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookGetByOwnerWSDL" xmlns:ns11="http://bidws.potatoni.org/" xmlns:ns12="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidBookWSDL" xmlns:ns13="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookGetBookByISBN" xmlns:ns14="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidGetHighPriceByBook" xmlns:ns15="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/UserFolder/UserGetUserInfoProcess" xmlns:ns16="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/EmailSystem/SendingEmail" xmlns:ns17="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidsGetAllBidsProcess" xmlns:ns18="http://orderws.potatoni.com/" xmlns:ns19="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/OrderFolder/OrderGenorder" xmlns:ns2="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/UserFolder/UserRegisterWSDL" xmlns:ns20="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/UserFolder/UserGetUserBySessionProcess" xmlns:ns21="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidGetAllCustomerWSDL" xmlns:ns22="http://enterprise.netbeans.org/bpel/YBandMB_BPEL/DefaultServiceName" xmlns:ns3="http://bookinfows.potatoni.com/" xmlns:ns4="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookInfofolder/BookInfoAddWSDL" xmlns:ns5="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/UserFolder/UserLoginWSDL" xmlns:ns6="http://bookws.potatoni.com/" xmlns:ns7="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookPublishWSDL" xmlns:ns8="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookGetAllProcess" xmlns:ns9="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookGetByNameProcess" xmlns:xlink="http://www.w3.org/2000/xlink">
+    <endpoints>
+        <endpoint endpoint-name="UserWebServicePort" interface-name="ns1:UserWebService" name="endpoint1" service-name="ns1:UserWebService"/>
+        <endpoint endpoint-name="UserRegisterWSDLPort" interface-name="ns2:UserRegisterWSDLPortType" name="endpoint2" service-name="ns2:UserRegisterWSDLService"/>
+        <endpoint endpoint-name="BookinfoWebServicePort" interface-name="ns3:BookinfoWebService" name="endpoint3" service-name="ns3:BookinfoWebService"/>
+        <endpoint endpoint-name="BookInfoAddWSDLPort" interface-name="ns4:BookInfoAddWSDLPortType" name="endpoint4" service-name="ns4:BookInfoAddWSDLService"/>
+        <endpoint endpoint-name="UserLoginWSDLPort" interface-name="ns5:UserLoginWSDLPortType" name="endpoint5" service-name="ns5:UserLoginWSDLService"/>
+        <endpoint endpoint-name="BookWebServicePort" interface-name="ns6:BookWebService" name="endpoint6" service-name="ns6:BookWebService"/>
+        <endpoint endpoint-name="BookPublishWSDLPort" interface-name="ns7:BookPublishPortType" name="endpoint7" service-name="ns7:BookPublishWSDLService"/>
+        <endpoint endpoint-name="BookGetAllProcessPort" interface-name="ns8:BookGetAllProcessPortType" name="endpoint8" service-name="ns8:BookGetAllProcessService"/>
+        <endpoint endpoint-name="BookGetByNameProcessPort" interface-name="ns9:BookGetByNameProcessPortType" name="endpoint9" service-name="ns9:BookGetByNameProcessService"/>
+        <endpoint endpoint-name="BookGetByOwnerWSDLPort" interface-name="ns10:BookGetByOwnerWSDLPortType" name="endpoint10" service-name="ns10:BookGetByOwnerWSDLService"/>
+        <endpoint endpoint-name="BidWebServicePort" interface-name="ns11:BidWebService" name="endpoint11" service-name="ns11:BidWebService"/>
+        <endpoint endpoint-name="BidBookWSDLPort" interface-name="ns12:BidBookWSDLPortType" name="endpoint12" service-name="ns12:BidBookWSDLService"/>
+        <endpoint endpoint-name="BookGetBookByISBNPort" interface-name="ns13:BookGetBookByISBNPortType" name="endpoint13" service-name="ns13:BookGetBookByISBNService"/>
+        <endpoint endpoint-name="BidGetHighPriceByBookPort" interface-name="ns14:BidGetHighPriceByBookPortType" name="endpoint14" service-name="ns14:BidGetHighPriceByBookService"/>
+        <endpoint endpoint-name="UserGetUserInfoProcessPort" interface-name="ns15:UserGetUserInfoProcessPortType" name="endpoint15" service-name="ns15:UserGetUserInfoProcessService"/>
+        <endpoint endpoint-name="SendingEmail_OutPort" interface-name="ns16:JMSOutPortType" name="endpoint16" service-name="ns16:JMSOutService"/>
+        <endpoint endpoint-name="BidsGetAllBidsProcessPort" interface-name="ns17:BidsGetAllBidsProcessPortType" name="endpoint17" service-name="ns17:BidsGetAllBidsProcessService"/>
+        <endpoint endpoint-name="OrderWebServicePort" interface-name="ns18:OrderWebService" name="endpoint18" service-name="ns18:OrderWebService"/>
+        <endpoint endpoint-name="OrderGenorderPort" interface-name="ns19:OrderGenorderPortType" name="endpoint19" service-name="ns19:OrderGenorderService"/>
+        <endpoint endpoint-name="UserGetUserBySessionProcessPort" interface-name="ns20:UserGetUserBySessionProcessPortType" name="endpoint20" service-name="ns20:UserGetUserBySessionProcessService"/>
+        <endpoint endpoint-name="BidGetAllCustomerWSDLPort" interface-name="ns21:BidGetAllCustomerWSDLPortType" name="endpoint21" service-name="ns21:BidGetAllCustomerWSDLService"/>
+        <endpoint display-name="BidBook" endpoint-name="BidBookWSDLPortTypeRole_myRole" file-path="BidFolder/BidBookProcess.bpel" interface-name="ns12:BidBookWSDLPortType" name="endpoint22" process-name="BidBookProcess" service-name="ns22:BidBook"/>
+        <endpoint display-name="BidsGetAllBIds" endpoint-name="BidsGetAllBidsProcessPortTypeRole_myRole" file-path="BidFolder/BidGetAllBidsProcess.bpel" interface-name="ns17:BidsGetAllBidsProcessPortType" name="endpoint23" process-name="BidGetAllBidsProcess" service-name="ns22:BidsGetAllBIds"/>
+        <endpoint display-name="BidGetAllCustomer" endpoint-name="BidGetAllCustomerWSDLPortTypeRole_myRole" file-path="BidFolder/BidGetAllCustomerProcess.bpel" interface-name="ns21:BidGetAllCustomerWSDLPortType" name="endpoint24" process-name="BidGetAllCustomerProcess" service-name="ns22:BidGetAllCustomer"/>
+        <endpoint display-name="BidGetHighestPrice" endpoint-name="BidGetHighPriceByBookPortTypeRole_myRole" file-path="BidFolder/BidGetHighPriceByBook.bpel" interface-name="ns14:BidGetHighPriceByBookPortType" name="endpoint25" process-name="BidGetHighPriceByBook" service-name="ns22:BidGetHighestPrice"/>
+        <endpoint display-name="BookGetAll" endpoint-name="BookGetAllProcessPortTypeRole_myRole" file-path="BookFolder/BookGetAllProcess.bpel" interface-name="ns8:BookGetAllProcessPortType" name="endpoint26" process-name="BookGetAllProcess" service-name="ns22:BookGetAll"/>
+        <endpoint display-name="BookGetBookByISBN" endpoint-name="BookGetBookByISBNPortTypeRole_myRole" file-path="BookFolder/BookGetBookByISBN.bpel" interface-name="ns13:BookGetBookByISBNPortType" name="endpoint27" process-name="BookGetBookByISBN" service-name="ns22:BookGetBookByISBN"/>
+        <endpoint display-name="BookGetByName" endpoint-name="BookGetByNameProcessPortTypeRole_myRole" file-path="BookFolder/BookGetByNameProcess.bpel" interface-name="ns9:BookGetByNameProcessPortType" name="endpoint28" process-name="BookGetByNameProcess" service-name="ns22:BookGetByName"/>
+        <endpoint display-name="BookGetOwned" endpoint-name="BookGetByOwnerWSDLPortTypeRole_myRole" file-path="BookFolder/BookGetByOwnerProcess.bpel" interface-name="ns10:BookGetByOwnerWSDLPortType" name="endpoint29" process-name="BookGetByOwnerProcess" service-name="ns22:BookGetOwned"/>
+        <endpoint display-name="BookPublish" endpoint-name="BookPublishPortTypeRole_myRole" file-path="BookFolder/BookPublishProcess.bpel" interface-name="ns7:BookPublishPortType" name="endpoint30" process-name="BookPublishProcess" service-name="ns22:BookPublish"/>
+        <endpoint display-name="BookInfoAdd" endpoint-name="BookInfoAddWSDLPortTypeRole_myRole" file-path="BookInfoFolder/BookInfoAddProcess.bpel" interface-name="ns4:BookInfoAddWSDLPortType" name="endpoint31" process-name="BookInfoAddProcess" service-name="ns22:BookInfoAdd"/>
+        <endpoint display-name="OrderGen" endpoint-name="OrderGenorderPortTypeRole_myRole" file-path="OrderFolder/OrderGenorder.bpel" interface-name="ns19:OrderGenorderPortType" name="endpoint32" process-name="OrderGenorder" service-name="ns22:OrderGen"/>
+        <endpoint display-name="UserGetUserBySession" endpoint-name="UserGetUserBySessionProcessPortTypeRole_myRole" file-path="UserFolder/UserGetUserBySessionProcess.bpel" interface-name="ns20:UserGetUserBySessionProcessPortType" name="endpoint33" process-name="UserGetUserBySessionProcess" service-name="ns22:UserGetUserBySession"/>
+        <endpoint display-name="UserGetUserInfo" endpoint-name="UserGetUserInfoProcessPortTypeRole_myRole" file-path="UserFolder/UserGetUserInfoProcess.bpel" interface-name="ns15:UserGetUserInfoProcessPortType" name="endpoint34" process-name="UserGetUserInfoProcess" service-name="ns22:UserGetUserInfo"/>
+        <endpoint display-name="UserLogin" endpoint-name="UserLoginWSDLPortTypeRole_myRole" file-path="UserFolder/UserLoginProcess.bpel" interface-name="ns5:UserLoginWSDLPortType" name="endpoint35" process-name="UserLoginProcess" service-name="ns22:UserLogin"/>
+        <endpoint display-name="UserRegister" endpoint-name="UserRegisterWSDLPortTypeRole_myRole" file-path="UserFolder/UserRegisterProcess.bpel" interface-name="ns2:UserRegisterWSDLPortType" name="endpoint36" process-name="UserRegisterProcess" service-name="ns22:UserRegister"/>
+        <endpoint display-name="UserWSPL" endpoint-name="UserWebServiceRole_partnerRole" file-path="BidFolder/BidBookProcess.bpel" interface-name="ns1:UserWebService" name="endpoint37" process-name="BidBookProcess" service-name="ns22:UserWSPL"/>
+        <endpoint display-name="BidWSPL" endpoint-name="BidWebServiceRole_partnerRole" file-path="BidFolder/BidBookProcess.bpel" interface-name="ns11:BidWebService" name="endpoint38" process-name="BidBookProcess" service-name="ns22:BidWSPL"/>
+        <endpoint display-name="PartnerLink1" endpoint-name="JMSOutPortTypeRole_partnerRole" file-path="BookFolder/BookGetAllProcess.bpel" interface-name="ns16:JMSOutPortType" name="endpoint39" process-name="BookGetAllProcess" service-name="ns22:PartnerLink1"/>
+        <endpoint display-name="BookWSPL" endpoint-name="BookWebServiceRole_partnerRole" file-path="BookFolder/BookGetAllProcess.bpel" interface-name="ns6:BookWebService" name="endpoint40" process-name="BookGetAllProcess" service-name="ns22:BookWSPL"/>
+        <endpoint display-name="BookInfoWSPL" endpoint-name="BookinfoWebServiceRole_partnerRole" file-path="BookFolder/BookPublishProcess.bpel" interface-name="ns3:BookinfoWebService" name="endpoint41" process-name="BookPublishProcess" service-name="ns22:BookInfoWSPL"/>
+        <endpoint display-name="BookInfo_PL" endpoint-name="BookinfoWebServiceRole_partnerRole" file-path="BookInfoFolder/BookInfoAddProcess.bpel" interface-name="ns3:BookinfoWebService" name="endpoint42" process-name="BookInfoAddProcess" service-name="ns22:BookInfo_PL"/>
+        <endpoint display-name="BidWSPL" endpoint-name="BidGetAllCustomerWSDLPortTypeRole_partnerRole" file-path="OrderFolder/OrderGenorder.bpel" interface-name="ns21:BidGetAllCustomerWSDLPortType" name="endpoint43" process-name="OrderGenorder" service-name="ns22:BidWSPL"/>
+        <endpoint display-name="OrderWSPL" endpoint-name="OrderWebServiceRole_partnerRole" file-path="OrderFolder/OrderGenorder.bpel" interface-name="ns18:OrderWebService" name="endpoint44" process-name="OrderGenorder" service-name="ns22:OrderWSPL"/>
+        <endpoint display-name="EmailWSPL" endpoint-name="JMSOutPortTypeRole_partnerRole" file-path="OrderFolder/OrderGenorder.bpel" interface-name="ns16:JMSOutPortType" name="endpoint45" process-name="OrderGenorder" service-name="ns22:EmailWSPL"/>
+        <endpoint display-name="SendingEmail" endpoint-name="JMSOutPortTypeRole_partnerRole" file-path="UserFolder/UserRegisterProcess.bpel" interface-name="ns16:JMSOutPortType" name="endpoint46" process-name="UserRegisterProcess" service-name="ns22:SendingEmail"/>
+    </endpoints>
+    <service-units>
+        <service-engine-service-unit artifacts-zip="YBandMB_BPEL.jar" component-name="sun-bpel-engine" defined="true" description="Represents this Service Unit" internal="true" name="CompositeAppTest-YBandMB_BPEL" unit-name="YBandMB_BPEL" unknown="false" x="150" y="97">
+            <provides endpoint="endpoint22"/>
+            <provides endpoint="endpoint23"/>
+            <provides endpoint="endpoint24"/>
+            <provides endpoint="endpoint25"/>
+            <provides endpoint="endpoint26"/>
+            <provides endpoint="endpoint27"/>
+            <provides endpoint="endpoint28"/>
+            <provides endpoint="endpoint29"/>
+            <provides endpoint="endpoint30"/>
+            <provides endpoint="endpoint31"/>
+            <provides endpoint="endpoint32"/>
+            <provides endpoint="endpoint33"/>
+            <provides endpoint="endpoint34"/>
+            <provides endpoint="endpoint35"/>
+            <provides endpoint="endpoint36"/>
+            <consumes endpoint="endpoint37"/>
+            <consumes endpoint="endpoint38"/>
+            <consumes endpoint="endpoint38"/>
+            <consumes endpoint="endpoint38"/>
+            <consumes endpoint="endpoint38"/>
+            <consumes endpoint="endpoint39"/>
+            <consumes endpoint="endpoint40"/>
+            <consumes endpoint="endpoint40"/>
+            <consumes endpoint="endpoint40"/>
+            <consumes endpoint="endpoint40"/>
+            <consumes endpoint="endpoint41"/>
+            <consumes endpoint="endpoint40"/>
+            <consumes endpoint="endpoint37"/>
+            <consumes endpoint="endpoint42"/>
+            <consumes endpoint="endpoint43"/>
+            <consumes endpoint="endpoint37"/>
+            <consumes endpoint="endpoint44"/>
+            <consumes endpoint="endpoint45"/>
+            <consumes endpoint="endpoint37"/>
+            <consumes endpoint="endpoint37"/>
+            <consumes endpoint="endpoint37"/>
+            <consumes endpoint="endpoint46"/>
+            <consumes endpoint="endpoint37"/>
+        </service-engine-service-unit>
+        <binding-component-service-unit artifacts-zip="sun-http-binding.jar" component-name="sun-http-binding" description="Represents this Service Unit" name="CompositeAppTest-sun-http-binding" unit-name="sun-http-binding">
+            <ports>
+                <port x="67" y="499">
+                    <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/192.168.1.110_9999/ServiceLayer/BidWebService.wsdl#xpointer(/definitions/service[@name='BidWebService']/port[@name='BidWebServicePort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint11"/>
+                    <provides endpoint="endpoint11"/>
+                </port>
+                <port x="67" y="1115">
+                    <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/192.168.1.110_9999/ServiceLayer/BookinfoWebService.wsdl#xpointer(/definitions/service[@name='BookinfoWebService']/port[@name='BookinfoWebServicePort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint3"/>
+                    <provides endpoint="endpoint3"/>
+                </port>
+                <port x="67" y="961">
+                    <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/192.168.1.110_9999/ServiceLayer/BookWebService.wsdl#xpointer(/definitions/service[@name='BookWebService']/port[@name='BookWebServicePort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint6"/>
+                    <provides endpoint="endpoint6"/>
+                </port>
+                <port x="0" y="-1">
+                    <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/192.168.1.110_9999/ServiceLayer/OrderWebService.wsdl#xpointer(/definitions/service[@name='OrderWebService']/port[@name='OrderWebServicePort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint18"/>
+                    <provides endpoint="endpoint18"/>
+                </port>
+                <port x="67" y="1269">
+                    <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/192.168.1.110_9999/ServiceLayer/UserWebService.wsdl#xpointer(/definitions/service[@name='UserWebService']/port[@name='UserWebServicePort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint1"/>
+                    <provides endpoint="endpoint1"/>
+                </port>
+                <port x="67" y="422">
+                    <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BidFolder/BidBookWSDL.wsdl#xpointer(/definitions/service[@name='BidBookWSDLService']/port[@name='BidBookWSDLPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint12"/>
+                    <provides endpoint="endpoint12"/>
+                </port>
+                <port x="67" y="37">
+                    <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BidFolder/BidGetAllBidsWSDL.wsdl#xpointer(/definitions/service[@name='BidsGetAllBidsProcessService']/port[@name='BidsGetAllBidsProcessPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint17"/>
+                    <provides endpoint="endpoint17"/>
+                </port>
+                <port x="0" y="-1">
+                    <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BidFolder/BidGetAllCustomerWSDL.wsdl#xpointer(/definitions/service[@name='BidGetAllCustomerWSDLService']/port[@name='BidGetAllCustomerWSDLPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint21"/>
+                    <provides endpoint="endpoint21"/>
+                </port>
+                <port x="67" y="268">
+                    <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BidFolder/BidGetHighPriceByBook.wsdl#xpointer(/definitions/service[@name='BidGetHighPriceByBookService']/port[@name='BidGetHighPriceByBookPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint14"/>
+                    <provides endpoint="endpoint14"/>
+                </port>
+                <port x="67" y="730">
+                    <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BookFolder/BookGetAllProcess.wsdl#xpointer(/definitions/service[@name='BookGetAllProcessService']/port[@name='BookGetAllProcessPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint8"/>
+                    <provides endpoint="endpoint8"/>
+                </port>
+                <port x="67" y="345">
+                    <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BookFolder/BookGetBookByISBN.wsdl#xpointer(/definitions/service[@name='BookGetBookByISBNService']/port[@name='BookGetBookByISBNPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint13"/>
+                    <provides endpoint="endpoint13"/>
+                </port>
+                <port x="67" y="653">
+                    <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BookFolder/BookGetByNameProcess.wsdl#xpointer(/definitions/service[@name='BookGetByNameProcessService']/port[@name='BookGetByNameProcessPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint9"/>
+                    <provides endpoint="endpoint9"/>
+                </port>
+                <port x="67" y="576">
+                    <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BookFolder/BookGetByOwnerWSDL.wsdl#xpointer(/definitions/service[@name='BookGetByOwnerWSDLService']/port[@name='BookGetByOwnerWSDLPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint10"/>
+                    <provides endpoint="endpoint10"/>
+                </port>
+                <port x="67" y="884">
+                    <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BookFolder/BookPublishWSDL.wsdl#xpointer(/definitions/service[@name='BookPublishWSDLService']/port[@name='BookPublishWSDLPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint7"/>
+                    <provides endpoint="endpoint7"/>
+                </port>
+                <port x="67" y="807">
+                    <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BookInfoFolder/BookInfoAddWSDL.wsdl#xpointer(/definitions/service[@name='BookInfoAddWSDLService']/port[@name='BookInfoAddWSDLPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint4"/>
+                    <provides endpoint="endpoint4"/>
+                </port>
+                <port x="0" y="-1">
+                    <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/OrderFolder/OrderGenorder.wsdl#xpointer(/definitions/service[@name='OrderGenorderService']/port[@name='OrderGenorderPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint19"/>
+                    <provides endpoint="endpoint19"/>
+                </port>
+                <port x="0" y="-1">
+                    <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/UserFolder/UserGetUserBySessionProcess.wsdl#xpointer(/definitions/service[@name='UserGetUserBySessionProcessService']/port[@name='UserGetUserBySessionProcessPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint20"/>
+                    <provides endpoint="endpoint20"/>
+                </port>
+                <port x="67" y="191">
+                    <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/UserFolder/UserGetUserInfoProcess.wsdl#xpointer(/definitions/service[@name='UserGetUserInfoProcessService']/port[@name='UserGetUserInfoProcessPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint15"/>
+                    <provides endpoint="endpoint15"/>
+                </port>
+                <port x="67" y="1038">
+                    <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/UserFolder/UserLoginWSDL.wsdl#xpointer(/definitions/service[@name='UserLoginWSDLService']/port[@name='UserLoginWSDLPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint5"/>
+                    <provides endpoint="endpoint5"/>
+                </port>
+                <port x="67" y="1192">
+                    <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/UserFolder/UserRegisterWSDL.wsdl#xpointer(/definitions/service[@name='UserRegisterWSDLService']/port[@name='UserRegisterWSDLPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint2"/>
+                    <provides endpoint="endpoint2"/>
+                </port>
+            </ports>
+        </binding-component-service-unit>
+        <binding-component-service-unit artifacts-zip="sun-jms-binding.jar" component-name="sun-jms-binding" description="Represents this Service Unit" name="CompositeAppTest-sun-jms-binding" unit-name="sun-jms-binding">
+            <ports>
+                <port x="67" y="114">
+                    <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/192.168.1.110_9999/EmailSystem/SendingEmail.wsdl#xpointer(/definitions/service[@name='JMSOutService']/port[@name='SendingEmail_OutPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint16"/>
+                    <provides endpoint="endpoint16"/>
+                </port>
+            </ports>
+        </binding-component-service-unit>
+    </service-units>
+    <connections>
+        <connection consumer="endpoint7" provider="endpoint30" state="unchanged"/>
+        <connection consumer="endpoint39" provider="endpoint16" state="unchanged"/>
+        <connection consumer="endpoint45" provider="endpoint16" state="unchanged"/>
+        <connection consumer="endpoint46" provider="endpoint16" state="unchanged"/>
+        <connection consumer="endpoint4" provider="endpoint31" state="unchanged"/>
+        <connection consumer="endpoint10" provider="endpoint29" state="unchanged"/>
+        <connection consumer="endpoint14" provider="endpoint25" state="unchanged"/>
+        <connection consumer="endpoint12" provider="endpoint22" state="unchanged"/>
+        <connection consumer="endpoint19" provider="endpoint32" state="unchanged"/>
+        <connection consumer="endpoint38" provider="endpoint11" state="unchanged"/>
+        <connection consumer="endpoint37" provider="endpoint1" state="unchanged"/>
+        <connection consumer="endpoint17" provider="endpoint23" state="unchanged"/>
+        <connection consumer="endpoint44" provider="endpoint18" state="unchanged"/>
+        <connection consumer="endpoint2" provider="endpoint36" state="unchanged"/>
+        <connection consumer="endpoint40" provider="endpoint6" state="unchanged"/>
+        <connection consumer="endpoint5" provider="endpoint35" state="unchanged"/>
+        <connection consumer="endpoint15" provider="endpoint34" state="unchanged"/>
+        <connection consumer="endpoint41" provider="endpoint3" state="unchanged"/>
+        <connection consumer="endpoint42" provider="endpoint3" state="unchanged"/>
+        <connection consumer="endpoint13" provider="endpoint27" state="unchanged"/>
+        <connection consumer="endpoint20" provider="endpoint33" state="unchanged"/>
+        <connection consumer="endpoint8" provider="endpoint26" state="unchanged"/>
+        <connection consumer="endpoint9" provider="endpoint28" state="unchanged"/>
+        <connection consumer="endpoint21" provider="endpoint24" state="unchanged"/>
+        <connection consumer="endpoint43" provider="endpoint24" state="unchanged"/>
+    </connections>
+    <porttypes>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/192.168.1.110_9999/EmailSystem/SendingEmail.wsdl#xpointer(/definitions/portType[@name='JMSOutPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/192.168.1.110_9999/ServiceLayer/BidWebService.wsdl#xpointer(/definitions/portType[@name='BidWebService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/192.168.1.110_9999/ServiceLayer/BookinfoWebService.wsdl#xpointer(/definitions/portType[@name='BookinfoWebService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/192.168.1.110_9999/ServiceLayer/BookWebService.wsdl#xpointer(/definitions/portType[@name='BookWebService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/192.168.1.110_9999/ServiceLayer/OrderWebService.wsdl#xpointer(/definitions/portType[@name='OrderWebService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/192.168.1.110_9999/ServiceLayer/UserWebService.wsdl#xpointer(/definitions/portType[@name='UserWebService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BidFolder/BidBookWSDL.wsdl#xpointer(/definitions/portType[@name='BidBookWSDLPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BidFolder/BidGetAllBidsWSDL.wsdl#xpointer(/definitions/portType[@name='BidsGetAllBidsProcessPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BidFolder/BidGetAllCustomerWSDL.wsdl#xpointer(/definitions/portType[@name='BidGetAllCustomerWSDLPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BidFolder/BidGetHighPriceByBook.wsdl#xpointer(/definitions/portType[@name='BidGetHighPriceByBookPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BookFolder/BookGetAllProcess.wsdl#xpointer(/definitions/portType[@name='BookGetAllProcessPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BookFolder/BookGetBookByISBN.wsdl#xpointer(/definitions/portType[@name='BookGetBookByISBNPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BookFolder/BookGetByNameProcess.wsdl#xpointer(/definitions/portType[@name='BookGetByNameProcessPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BookFolder/BookGetByOwnerWSDL.wsdl#xpointer(/definitions/portType[@name='BookGetByOwnerWSDLPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BookFolder/BookPublishWSDL.wsdl#xpointer(/definitions/portType[@name='BookPublishPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BookInfoFolder/BookInfoAddWSDL.wsdl#xpointer(/definitions/portType[@name='BookInfoAddWSDLPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/OrderFolder/OrderGenorder.wsdl#xpointer(/definitions/portType[@name='OrderGenorderPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/UserFolder/UserGetUserBySessionProcess.wsdl#xpointer(/definitions/portType[@name='UserGetUserBySessionProcessPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/UserFolder/UserGetUserInfoProcess.wsdl#xpointer(/definitions/portType[@name='UserGetUserInfoProcessPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/UserFolder/UserLoginWSDL.wsdl#xpointer(/definitions/portType[@name='UserLoginWSDLPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/UserFolder/UserRegisterWSDL.wsdl#xpointer(/definitions/portType[@name='UserRegisterWSDLPortType'])" xlink:type="simple"/>
+    </porttypes>
+    <bindings>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/192.168.1.110_9999/EmailSystem/SendingEmail.wsdl#xpointer(/definitions/binding[@name='JMSOutBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/192.168.1.110_9999/ServiceLayer/BidWebService.wsdl#xpointer(/definitions/binding[@name='BidWebServicePortBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/192.168.1.110_9999/ServiceLayer/BookinfoWebService.wsdl#xpointer(/definitions/binding[@name='BookinfoWebServicePortBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/192.168.1.110_9999/ServiceLayer/BookWebService.wsdl#xpointer(/definitions/binding[@name='BookWebServicePortBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/192.168.1.110_9999/ServiceLayer/OrderWebService.wsdl#xpointer(/definitions/binding[@name='OrderWebServicePortBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/192.168.1.110_9999/ServiceLayer/UserWebService.wsdl#xpointer(/definitions/binding[@name='UserWebServicePortBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BidFolder/BidBookWSDL.wsdl#xpointer(/definitions/binding[@name='BidBookWSDLBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BidFolder/BidGetAllBidsWSDL.wsdl#xpointer(/definitions/binding[@name='BidsGetAllBidsProcessBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BidFolder/BidGetAllCustomerWSDL.wsdl#xpointer(/definitions/binding[@name='BidGetAllCustomerWSDLBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BidFolder/BidGetHighPriceByBook.wsdl#xpointer(/definitions/binding[@name='BidGetHighPriceByBookBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BookFolder/BookGetAllProcess.wsdl#xpointer(/definitions/binding[@name='BookGetAllProcessBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BookFolder/BookGetBookByISBN.wsdl#xpointer(/definitions/binding[@name='BookGetBookByISBNBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BookFolder/BookGetByNameProcess.wsdl#xpointer(/definitions/binding[@name='BookGetByNameProcessBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BookFolder/BookGetByOwnerWSDL.wsdl#xpointer(/definitions/binding[@name='BookGetByOwnerWSDLBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BookFolder/BookPublishWSDL.wsdl#xpointer(/definitions/binding[@name='BookPublishWSDLBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BookInfoFolder/BookInfoAddWSDL.wsdl#xpointer(/definitions/binding[@name='BookInfoAddWSDLBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/OrderFolder/OrderGenorder.wsdl#xpointer(/definitions/binding[@name='OrderGenorderBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/UserFolder/UserGetUserBySessionProcess.wsdl#xpointer(/definitions/binding[@name='UserGetUserBySessionProcessBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/UserFolder/UserGetUserInfoProcess.wsdl#xpointer(/definitions/binding[@name='UserGetUserInfoProcessBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/UserFolder/UserLoginWSDL.wsdl#xpointer(/definitions/binding[@name='UserLoginWSDLBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/UserFolder/UserRegisterWSDL.wsdl#xpointer(/definitions/binding[@name='UserRegisterWSDLBinding'])" xlink:type="simple"/>
+    </bindings>
+    <services>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/192.168.1.110_9999/EmailSystem/SendingEmail.wsdl#xpointer(/definitions/service[@name='JMSOutService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/192.168.1.110_9999/ServiceLayer/BidWebService.wsdl#xpointer(/definitions/service[@name='BidWebService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/192.168.1.110_9999/ServiceLayer/BookinfoWebService.wsdl#xpointer(/definitions/service[@name='BookinfoWebService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/192.168.1.110_9999/ServiceLayer/BookWebService.wsdl#xpointer(/definitions/service[@name='BookWebService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/192.168.1.110_9999/ServiceLayer/OrderWebService.wsdl#xpointer(/definitions/service[@name='OrderWebService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/192.168.1.110_9999/ServiceLayer/UserWebService.wsdl#xpointer(/definitions/service[@name='UserWebService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BidFolder/BidBookWSDL.wsdl#xpointer(/definitions/service[@name='BidBookWSDLService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BidFolder/BidGetAllBidsWSDL.wsdl#xpointer(/definitions/service[@name='BidsGetAllBidsProcessService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BidFolder/BidGetAllCustomerWSDL.wsdl#xpointer(/definitions/service[@name='BidGetAllCustomerWSDLService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BidFolder/BidGetHighPriceByBook.wsdl#xpointer(/definitions/service[@name='BidGetHighPriceByBookService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BookFolder/BookGetAllProcess.wsdl#xpointer(/definitions/service[@name='BookGetAllProcessService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BookFolder/BookGetBookByISBN.wsdl#xpointer(/definitions/service[@name='BookGetBookByISBNService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BookFolder/BookGetByNameProcess.wsdl#xpointer(/definitions/service[@name='BookGetByNameProcessService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BookFolder/BookGetByOwnerWSDL.wsdl#xpointer(/definitions/service[@name='BookGetByOwnerWSDLService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BookFolder/BookPublishWSDL.wsdl#xpointer(/definitions/service[@name='BookPublishWSDLService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/BookInfoFolder/BookInfoAddWSDL.wsdl#xpointer(/definitions/service[@name='BookInfoAddWSDLService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/OrderFolder/OrderGenorder.wsdl#xpointer(/definitions/service[@name='OrderGenorderService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/UserFolder/UserGetUserBySessionProcess.wsdl#xpointer(/definitions/service[@name='UserGetUserBySessionProcessService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/UserFolder/UserGetUserInfoProcess.wsdl#xpointer(/definitions/service[@name='UserGetUserInfoProcessService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/UserFolder/UserLoginWSDL.wsdl#xpointer(/definitions/service[@name='UserLoginWSDLService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/YBandMB_BPEL/UserFolder/UserRegisterWSDL.wsdl#xpointer(/definitions/service[@name='UserRegisterWSDLService'])" xlink:type="simple"/>
+    </services>
+    <regions>
+        <region name="WSDL Endpoints" width="150"/>
+        <region name="JBI Modules" width="526"/>
+        <region name="External Modules" width="200"/>
+    </regions>
+</casa>

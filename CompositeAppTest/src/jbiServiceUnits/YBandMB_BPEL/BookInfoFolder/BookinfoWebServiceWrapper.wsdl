@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<definitions
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="BookinfoWebServiceWrapper" targetNamespace="http://enterprise.netbeans.org/bpel/BookinfoWebServiceWrapper" xmlns:tns="http://enterprise.netbeans.org/bpel/BookinfoWebServiceWrapper" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns="http://bookinfows.potatoni.com/">
+    <import location="http://192.168.1.110:9999/ServiceLayer/BookinfoWebService?wsdl" namespace="http://bookinfows.potatoni.com/"/>
+    <plnk:partnerLinkType name="BookinfoWebServiceLinkType">
+        <plnk:role name="BookinfoWebServiceRole" portType="ns:BookinfoWebService"/>
+    </plnk:partnerLinkType>
+</definitions>

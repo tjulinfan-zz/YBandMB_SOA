@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process
+    name="UserLoginProcess"
+    targetNamespace="http://enterprise.netbeans.org/bpel/YBandMB_BPEL/DefaultServiceName"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/YBandMB_BPEL/DefaultServiceName"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2"
+    xmlns:sxat="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Attachment"
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling">
+    <import namespace="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/UserFolder/UserLoginWSDL" location="UserLoginWSDL.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/UserWebServiceWrapper" location="UserWebServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://userws.potatoni.com/" location="http://192.168.1.110:9999/ServiceLayer/UserWebService?wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="UserWSPL" xmlns:tns="http://enterprise.netbeans.org/bpel/UserWebServiceWrapper" partnerLinkType="tns:UserLoginWebServiceLinkType" partnerRole="UserWebServiceRole"/>
+        <partnerLink name="UserLogin" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/UserFolder/UserLoginWSDL" partnerLinkType="tns:UserLoginWSDL" myRole="UserLoginWSDLPortTypeRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="IsUserExistingOut" xmlns:tns="http://userws.potatoni.com/" messageType="tns:isUserExistingResponse"/>
+        <variable name="IsUserExistingIn" xmlns:tns="http://userws.potatoni.com/" messageType="tns:isUserExisting"/>
+        <variable name="LogInOut" xmlns:tns="http://userws.potatoni.com/" messageType="tns:logInResponse"/>
+        <variable name="LogInIn" xmlns:tns="http://userws.potatoni.com/" messageType="tns:logIn"/>
+        <variable name="UserLoginWSDLOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/UserFolder/UserLoginWSDL" messageType="tns:UserLoginWSDLOperationResponse"/>
+        <variable name="UserLoginWSDLOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/UserFolder/UserLoginWSDL" messageType="tns:UserLoginWSDLOperationRequest"/>
+    </variables>
+    <sequence>
+        <receive name="Receive" createInstance="yes" partnerLink="UserLogin" operation="UserLoginWSDLOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/UserFolder/UserLoginWSDL" portType="tns:UserLoginWSDLPortType" variable="UserLoginWSDLOperationIn"/>
+        <assign name="Assign1">
+            <copy>
+                <from>$UserLoginWSDLOperationIn.inputUserLogin/username</from>
+                <to>$LogInIn.parameters/username</to>
+            </copy>
+            <copy>
+                <from>$UserLoginWSDLOperationIn.inputUserLogin/password</from>
+                <to>$LogInIn.parameters/password</to>
+            </copy>
+            <copy>
+                <from>$UserLoginWSDLOperationIn.inputUserLogin/username</from>
+                <to>$IsUserExistingIn.parameters/username</to>
+            </copy>
+        </assign>
+        <invoke name="InvokeIsUserExisting" partnerLink="UserWSPL" operation="isUserExisting" xmlns:tns="http://userws.potatoni.com/" portType="tns:UserWebService" inputVariable="IsUserExistingIn" outputVariable="IsUserExistingOut"/>
+        <if name="If1">
+            <condition>true() = $IsUserExistingOut.parameters/return</condition>
+            <sequence name="Sequence1">
+                <scope name="Scope1" xmlns:tns="http://userws.potatoni.com/">
+                    <variables>
+                        <variable name="UserLoginWSDLOperationOutFault" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/UserFolder/UserLoginWSDL" messageType="tns:UserLoginWSDLOperationResponse"/>
+                    </variables>
+                    <faultHandlers>
+                        <catch faultName="tns:PasswordIncorrectException" faultVariable="e" faultMessageType="tns:PasswordIncorrectException">
+                            <sequence name="Sequence2">
+                                <assign name="Assign4">
+                                    <copy>
+                                        <from>'PASSWORDWRONG'</from>
+                                        <to>$UserLoginWSDLOperationOutFault.outputUserLogin/return/sessionId</to>
+                                    </copy>
+                                    <copy>
+                                        <from>'PASSWORDW1RONG'</from>
+                                        <to>$e.fault/message</to>
+                                    </copy>
+                                </assign>
+                                <reply name="ReplyFault" partnerLink="UserLogin" operation="UserLoginWSDLOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/UserFolder/UserLoginWSDL" portType="tns:UserLoginWSDLPortType" variable="UserLoginWSDLOperationOutFault"/>
+                                <exit name="Exit1"/>
+                            </sequence>
+                        </catch>
+                    </faultHandlers>
+                    <invoke name="InvokeLogin" partnerLink="UserWSPL" operation="logIn" xmlns:tns="http://userws.potatoni.com/" portType="tns:UserWebService" inputVariable="LogInIn" outputVariable="LogInOut"/>
+                </scope>
+                <assign name="Assign2">
+                    <copy>
+                            <from>$LogInOut.parameters/return</from>
+                                <to>$UserLoginWSDLOperationOut.outputUserLogin/return</to>
+                        </copy>
+                </assign>
+            </sequence>
+            <else>
+                <assign name="Assign3">
+                    <copy>
+                        <from>'NOUSER'</from>
+                        <to>$UserLoginWSDLOperationOut.outputUserLogin/return/sessionId</to>
+                    </copy>
+                </assign>
+            </else>
+        </if>
+        <reply name="Reply" partnerLink="UserLogin" operation="UserLoginWSDLOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/UserFolder/UserLoginWSDL" portType="tns:UserLoginWSDLPortType" variable="UserLoginWSDLOperationOut"/>
+    </sequence>
+</process>

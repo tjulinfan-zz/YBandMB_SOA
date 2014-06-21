@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<definitions
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="UserWebServiceWrapper" targetNamespace="http://enterprise.netbeans.org/bpel/UserWebServiceWrapper" xmlns:tns="http://enterprise.netbeans.org/bpel/UserWebServiceWrapper" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns="http://userws.potatoni.com/">
+    <import location="http://192.168.1.110:9999/ServiceLayer/UserWebService?wsdl" namespace="http://userws.potatoni.com/"/>
+    <plnk:partnerLinkType name="UserWebServiceLinkType">
+        <plnk:role name="UserWebServiceRole" portType="ns:UserWebService"/>
+    </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="UserIsLoggedInWebServiceLinkType">
+        <plnk:role name="UserWebServiceRole" portType="ns:UserWebService"/>
+    </plnk:partnerLinkType>
+</definitions>
