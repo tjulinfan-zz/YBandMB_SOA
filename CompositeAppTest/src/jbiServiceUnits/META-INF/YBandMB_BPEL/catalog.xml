@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://192.168.1.110:9999/ServiceLayer/BookinfoWebService?wsdl" uri="../192.168.1.110_9999/ServiceLayer/BookinfoWebService.wsdl"/>
+    <system systemId="http://192.168.1.110:9999/ServiceLayer/BookinfoWebService?xsd=1" uri="../192.168.1.110_9999/ServiceLayer/BookinfoWebService.xsd_1.xsd"/>
+    <system systemId="http://192.168.1.110:9999/ServiceLayer/BookWebService?wsdl" uri="../192.168.1.110_9999/ServiceLayer/BookWebService.wsdl"/>
+    <system systemId="http://192.168.1.110:9999/ServiceLayer/BookWebService?xsd=1" uri="../192.168.1.110_9999/ServiceLayer/BookWebService.xsd_1.xsd"/>
+    <system systemId="file:/Users/bianshujun/Desktop/iep-insider-trading/projects/YBandMB_BPEL/src/BidFolder/BidsGetAllBidsWSDL.wsdl" uri="../BidFolder/BidsGetAllBidsWSDL.wsdl"/>
+    <system systemId="http://192.168.1.110:9999/ServiceLayer/UserWebService?wsdl" uri="../192.168.1.110_9999/ServiceLayer/UserWebService.wsdl"/>
+    <system systemId="http://192.168.1.110:9999/ServiceLayer/UserWebService?xsd=1" uri="../192.168.1.110_9999/ServiceLayer/UserWebService.xsd_1.xsd"/>
+    <system systemId="http://192.168.1.110:9999/ServiceLayer/OrderWebService?wsdl" uri="../192.168.1.110_9999/ServiceLayer/OrderWebService.wsdl"/>
+    <system systemId="http://192.168.1.110:9999/ServiceLayer/OrderWebService?xsd=1" uri="../192.168.1.110_9999/ServiceLayer/OrderWebService.xsd_1.xsd"/>
+    <system systemId="http://192.168.1.110:9999/ServiceLayer/BidWebService?wsdl" uri="../192.168.1.110_9999/ServiceLayer/BidWebService.wsdl"/>
+    <system systemId="http://192.168.1.110:9999/ServiceLayer/BidWebService?xsd=1" uri="../192.168.1.110_9999/ServiceLayer/BidWebService.xsd_1.xsd"/>
+</catalog>

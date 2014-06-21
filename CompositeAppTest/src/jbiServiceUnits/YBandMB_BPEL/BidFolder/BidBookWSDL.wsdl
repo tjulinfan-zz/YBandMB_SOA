@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="BidBookWSDL" targetNamespace="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidBookWSDL"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidBookWSDL" xmlns:ns="http://bidws.potatoni.org/" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <types>
+        <xsd:schema targetNamespace="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidBookWSDL">
+            <xsd:import namespace="http://bidws.potatoni.org/" schemaLocation="http://192.168.1.110:9999/ServiceLayer/BidWebService?xsd=1"/>
+        </xsd:schema>
+    </types>
+    <message name="BidBookWSDLOperationRequest">
+        <part name="inputBidBook" element="ns:bidABook"/>
+    </message>
+    <message name="BidBookWSDLOperationResponse">
+        <part name="outputBidBook" element="ns:bidABookResponse"/>
+    </message>
+    <portType name="BidBookWSDLPortType">
+        <operation name="BidBookWSDLOperation">
+            <input name="input1" message="tns:BidBookWSDLOperationRequest"/>
+            <output name="output1" message="tns:BidBookWSDLOperationResponse"/>
+        </operation>
+    </portType>
+    <binding name="BidBookWSDLBinding" type="tns:BidBookWSDLPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="BidBookWSDLOperation">
+            <soap:operation/>
+            <input name="input1">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output1">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="BidBookWSDLService">
+        <port name="BidBookWSDLPort" binding="tns:BidBookWSDLBinding">
+            <soap:address location="http://localhost:${HttpDefaultPort}/BidBookWSDLService/BidBookWSDLPort"/>
+        </port>
+    </service>
+    <plnk:partnerLinkType name="BidBookWSDL">
+        <!-- A partner link type is automatically generated when a new port type is added. Partner link types are used by BPEL processes. 
+In a BPEL process, a partner link represents the interaction between the BPEL process and a partner service. Each partner link is associated with a partner link type.
+A partner link type characterizes the conversational relationship between two services. The partner link type can have one or two roles.-->
+        <plnk:role name="BidBookWSDLPortTypeRole" portType="tns:BidBookWSDLPortType"/>
+    </plnk:partnerLinkType>
+</definitions>

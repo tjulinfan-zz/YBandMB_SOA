@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jbi xmlns="http://java.sun.com/xml/ns/jbi" xmlns:ns1="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookPublishWSDL" xmlns:ns10="http://userws.potatoni.com/" xmlns:ns11="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidsGetAllBidsProcess" xmlns:ns12="http://orderws.potatoni.com/" xmlns:ns13="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/UserFolder/UserRegisterWSDL" xmlns:ns14="http://bookws.potatoni.com/" xmlns:ns15="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/UserFolder/UserLoginWSDL" xmlns:ns16="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/UserFolder/UserGetUserInfoProcess" xmlns:ns17="http://bookinfows.potatoni.com/" xmlns:ns18="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookGetBookByISBN" xmlns:ns19="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/UserFolder/UserGetUserBySessionProcess" xmlns:ns2="http://enterprise.netbeans.org/bpel/YBandMB_BPEL/DefaultServiceName" xmlns:ns20="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookGetAllProcess" xmlns:ns21="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookGetByNameProcess" xmlns:ns22="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidGetAllCustomerWSDL" xmlns:ns3="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/EmailSystem/SendingEmail" xmlns:ns4="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookInfofolder/BookInfoAddWSDL" xmlns:ns5="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BookFolder/BookGetByOwnerWSDL" xmlns:ns6="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidGetHighPriceByBook" xmlns:ns7="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/BidFolder/BidBookWSDL" xmlns:ns8="http://j2ee.netbeans.org/wsdl/YBandMB_BPEL/OrderFolder/OrderGenorder" xmlns:ns9="http://bidws.potatoni.org/" version="1.0">
+    <services binding-component="true">
+        <provides endpoint-name="BidWebServicePort" interface-name="ns9:BidWebService" service-name="ns9:BidWebService"/>
+        <provides endpoint-name="UserWebServicePort" interface-name="ns10:UserWebService" service-name="ns10:UserWebService"/>
+        <provides endpoint-name="OrderWebServicePort" interface-name="ns12:OrderWebService" service-name="ns12:OrderWebService"/>
+        <provides endpoint-name="BookWebServicePort" interface-name="ns14:BookWebService" service-name="ns14:BookWebService"/>
+        <provides endpoint-name="BookinfoWebServicePort" interface-name="ns17:BookinfoWebService" service-name="ns17:BookinfoWebService"/>
+        <consumes endpoint-name="BookPublishWSDLPort" interface-name="ns1:BookPublishPortType" service-name="ns1:BookPublishWSDLService"/>
+        <consumes endpoint-name="BookInfoAddWSDLPort" interface-name="ns4:BookInfoAddWSDLPortType" service-name="ns4:BookInfoAddWSDLService"/>
+        <consumes endpoint-name="BookGetByOwnerWSDLPort" interface-name="ns5:BookGetByOwnerWSDLPortType" service-name="ns5:BookGetByOwnerWSDLService"/>
+        <consumes endpoint-name="BidGetHighPriceByBookPort" interface-name="ns6:BidGetHighPriceByBookPortType" service-name="ns6:BidGetHighPriceByBookService"/>
+        <consumes endpoint-name="BidBookWSDLPort" interface-name="ns7:BidBookWSDLPortType" service-name="ns7:BidBookWSDLService"/>
+        <consumes endpoint-name="OrderGenorderPort" interface-name="ns8:OrderGenorderPortType" service-name="ns8:OrderGenorderService"/>
+        <consumes endpoint-name="BidsGetAllBidsProcessPort" interface-name="ns11:BidsGetAllBidsProcessPortType" service-name="ns11:BidsGetAllBidsProcessService"/>
+        <consumes endpoint-name="UserRegisterWSDLPort" interface-name="ns13:UserRegisterWSDLPortType" service-name="ns13:UserRegisterWSDLService"/>
+        <consumes endpoint-name="UserLoginWSDLPort" interface-name="ns15:UserLoginWSDLPortType" service-name="ns15:UserLoginWSDLService"/>
+        <consumes endpoint-name="UserGetUserInfoProcessPort" interface-name="ns16:UserGetUserInfoProcessPortType" service-name="ns16:UserGetUserInfoProcessService"/>
+        <consumes endpoint-name="BookGetBookByISBNPort" interface-name="ns18:BookGetBookByISBNPortType" service-name="ns18:BookGetBookByISBNService"/>
+        <consumes endpoint-name="UserGetUserBySessionProcessPort" interface-name="ns19:UserGetUserBySessionProcessPortType" service-name="ns19:UserGetUserBySessionProcessService"/>
+        <consumes endpoint-name="BookGetAllProcessPort" interface-name="ns20:BookGetAllProcessPortType" service-name="ns20:BookGetAllProcessService"/>
+        <consumes endpoint-name="BookGetByNameProcessPort" interface-name="ns21:BookGetByNameProcessPortType" service-name="ns21:BookGetByNameProcessService"/>
+        <consumes endpoint-name="BidGetAllCustomerWSDLPort" interface-name="ns22:BidGetAllCustomerWSDLPortType" service-name="ns22:BidGetAllCustomerWSDLService"/>
+    </services>
+</jbi>
