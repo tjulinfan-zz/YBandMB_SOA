@@ -1,0 +1,68 @@
+<!--
+ Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.3 (tags/2.3-7528; 2013-04-29T19:34:10+0000) JAXWS-RI/2.2.8 JAXWS/2.2 svn-revision#unknown.
+ -->
+<xs:schema xmlns:tns="http://userws.potatoni.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://userws.potatoni.com/">
+    <xs:element name="InternalException" type="tns:InternalException"/>
+    <xs:element name="PasswordIncorrectException" type="tns:PasswordIncorrectException"/>
+    <xs:element name="UserNotExistingException" type="tns:UserNotExistingException"/>
+    <xs:element name="isLoggedIn" type="tns:isLoggedIn"/>
+    <xs:element name="isLoggedInResponse" type="tns:isLoggedInResponse"/>
+    <xs:element name="isUserExisting" type="tns:isUserExisting"/>
+    <xs:element name="isUserExistingResponse" type="tns:isUserExistingResponse"/>
+    <xs:element name="logIn" type="tns:logIn"/>
+    <xs:element name="logInResponse" type="tns:logInResponse"/>
+    <xs:element name="registerUser" type="tns:registerUser"/>
+    <xs:element name="registerUserResponse" type="tns:registerUserResponse"/>
+    <xs:complexType name="isLoggedIn">...</xs:complexType>
+    <xs:complexType name="isLoggedInResponse">...</xs:complexType>
+    <xs:complexType name="InternalException">...</xs:complexType>
+    <xs:complexType name="registerUser">
+        <xs:sequence>
+            <xs:element name="username" type="xs:string" minOccurs="0"/>
+            <xs:element name="password" type="xs:string" minOccurs="0"/>
+            <xs:element name="email" type="xs:string" minOccurs="0"/>
+            <xs:element name="phonenumber" type="xs:string" minOccurs="0"/>
+            <xs:element name="address" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="registerUserResponse">
+        <xs:sequence/>
+    </xs:complexType>
+    <xs:complexType name="logIn">
+        <xs:sequence>
+            <xs:element name="username" type="xs:string" minOccurs="0"/>
+            <xs:element name="password" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="logInResponse">
+        <xs:sequence>
+            <xs:element name="return" type="tns:session" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="session">
+        <xs:sequence>
+            <xs:element name="sessionId" type="xs:string" minOccurs="0"/>
+            <xs:element name="userid" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PasswordIncorrectException">
+        <xs:sequence>
+            <xs:element name="message" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="UserNotExistingException">
+        <xs:sequence>
+            <xs:element name="message" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="isUserExisting">
+        <xs:sequence>
+            <xs:element name="username" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="isUserExistingResponse">
+        <xs:sequence>
+            <xs:element name="return" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
